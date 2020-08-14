@@ -1,0 +1,27 @@
+{
+  "name": "server-nodejs",
+  "version": "1.0.0",
+  "description": "node server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon ./app.js localhost 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jagandvs/angular-nodejs-demo-app.git"
+  },
+  "author": "Jagan Mohan Rao",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "msnodesqlv8": "^2.0.2",
+    "mssql": "^6.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
