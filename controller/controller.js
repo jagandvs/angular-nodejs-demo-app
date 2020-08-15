@@ -88,6 +88,19 @@ class MainController {
             res.send(error.message)
         }
     }
+
+    async getBomDetailTable(req, res) {
+        try {
+            const pool = await poolPromise
+            const result = await pool.request()
+                .input('BD_BM_CODE', sql.Int, req.query.bd_bm_code)
+                .query(queries.getBomDetailTable)
+            res.json(result.recordset)
+        } catch (error) {
+            res.status(500)
+            res.send(error.message)
+        }
+    }
     // async deleteBomDetail(req, res) {
     //     try {
     //         const pool = await poolPromise

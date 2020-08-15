@@ -1,0 +1,71 @@
+{
+  "BOM_DETAIL": [
+    [
+      {
+        "BD_BM_CODE": 851959,
+        "BD_I_CODE": 1002,
+        "BD_SCRAPQTY": 18,
+        "BD_VQTY": 18,
+        "ES_DELETE": false
+      }
+    ]
+  ],
+  "BOM_MASTER": [
+    {
+      "BM_CODE": 851959,
+      "BM_I_CODE": "1002",
+      "ES_DELETE": false,
+      "MODIFY": true,
+      "id": 1
+    },
+    {
+      "BM_CODE": 133492,
+      "BM_I_CODE": "1003",
+      "ES_DELETE": false,
+      "MODIFY": true,
+      "id": 2
+    }
+  ],
+  "ITEM_MASTER": [
+    {
+      "I_CODE": 1001,
+      "I_CODENO": "180014862",
+      "I_NAME": "END CORE",
+      "I_UOM_CODE": 1
+    },
+    {
+      "I_CODE": 1002,
+      "I_CODENO": "180014859",
+      "I_NAME": "SILENCER",
+      "I_UOM_CODE": 2
+    },
+    {
+      "I_CODE": 1003,
+      "I_CODENO": "D CAP F",
+      "I_NAME": "D CAP FORM",
+      "I_UOM_CODE": 1
+    },
+    {
+      "I_CODE": 1004,
+      "I_CODENO": "D CAP B",
+      "I_NAME": "D CAP FL",
+      "I_UOM_CODE": 1
+    },
+    {
+      "I_CODE": 1005,
+      "I_CODENO": "50/52",
+      "I_NAME": "50/52 CD BL",
+      "I_UOM_CODE": 2
+    }
+  ],
+  "ITEM_UNIT_MASTER": [
+    {
+      "I_UOM_CODE": 1,
+      "I_UOM_NAME": "NOS"
+    },
+    {
+      "I_UOM_CODE": 2,
+      "I_UOM_NAME": "STS"
+    }
+  ]
+}

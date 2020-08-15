@@ -1,0 +1,316 @@
+<!-- screen middle container -->
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <!-- header section -->
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-xs-12 mb-1">
+                <h2 class="content-header-title">Bill Of Material</h2>
+            </div>
+            <!-- breadcrum section -->
+            <div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
+                <div class="breadcrumb-wrapper col-xs-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="">Home</a>
+                        </li>
+
+                        <li class="breadcrumb-item active">Bill Of Material
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <!-- breadcrumb section ends -->
+        </div>
+        <!-- header section ends -->
+
+        <!-- app body section -->
+
+        <div class="content-body">
+
+            <!-- card section -->
+            <p-card>
+                <p-toast position="bottom-center" key="t1"></p-toast>
+                <p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000" key="c1"></p-confirmDialog>
+                <!-- primeng table -->
+                <p-table #dt [value]="bom_master_table" [rows]="10" [paginator]="true"
+                    [globalFilterFields]="['BM_TABLE_I_CODENO','BM_TABLE_NAME']" [rowsPerPageOptions]="[10,25,50]"
+                    [loading]="loading">
+
+                    <ng-template pTemplate="caption">
+                        <div class="row justify-content-between">
+                            <div class="col-md-3">
+                                <button class="btn btn-primary" (click)="addNewItem()">Add Item <i
+                                        class="fas fa-plus"></i></button>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Search..." />
+                                </span>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="BM_TABLE_I_CODENO">Finished Product Code <p-sortIcon
+                                    field="BM_TABLE_I_CODENO">
+                                </p-sortIcon>
+                            </th>
+
+                            <th pSortableColumn="BM_TABLE_NAME">Finished Product Name <p-sortIcon field="BM_TABLE_NAME">
+                                </p-sortIcon>
+                            </th>
+
+                            <th>Action</th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-bom_master_table let-ri="rowIndex">
+                        <tr>
+                            <td>{{bom_master_table.BM_TABLE_I_CODENO}}</td>
+                            <td>{{bom_master_table.BM_TABLE_NAME}}</td>
+                            <td>
+                                <button class="btn btn-outline-danger mr-1 round"
+                                    (click)="deleteBomTableRow(bom_master_table,ri)"><i
+                                        class="fas fa-trash"></i></button>
+                                <button class="btn btn-outline-warning mr-1 round"
+                                    (click)="editItem(bom_master_table)"><i class="far fa-edit"></i></button>
+                                <button class="btn btn-outline-info mr-1 round"><i class="far fa-eye"></i></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-card>
+        </div>
+        <p-dialog header="Bill Of Material" [(visible)]="displayBasic" [style]="{width: '95vw'}" [maximizable]="true"
+            [baseZIndex]="10000" [closable]="false">
+            <p-toast key="t2"></p-toast>
+            <p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000"></p-confirmDialog>
+            <ng-template pTemplate="content">
+                <div class="container productForm">
+                    <form focusInvalidInput [formGroup]="productForm">
+                        <div class="form-row">
+                            <div class="form-group col-12 col-md-2">
+                                <label for="P_I_CODENO">Finished Product Code <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="form-group col-12 col-md-4">
+                                <p-dropdown [optionLabel]="label" [options]="I_CODENO" formControlName="I_CODENO"
+                                    [filter]="true" (onChange)="onProdcodeNoSelected()" [showClear]="true"
+                                    placeholder="Select Finished Product Code" [resetFilterOnHide]="true"
+                                    [virtualScroll]="true" itemSize="10" [autofocus]="true" styleClass="pop-dropdown">
+                                </p-dropdown>
+                                <div *ngIf="submitted && f.I_CODENO.errors" class="alert alert-danger">
+                                    <div *ngIf="f.I_CODENO.errors.required">Finished Product Code is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-12 col-md-2">
+                                <label for="P_I_NAME">Finished Product Name <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="form-group col-12 col-md-4">
+                                <p-dropdown [optionLabel]="label" [options]="I_NAME" formControlName="I_NAME"
+                                    [filter]="true" (onChange)="onProdNameSelected()" [showClear]="true"
+                                    placeholder="Select Finished Product Code" [resetFilterOnHide]="true"
+                                    [virtualScroll]="true" itemSize="10" styleClass="pop-dropdown">
+                                </p-dropdown>
+                                <div *ngIf="submitted && f.I_NAME.errors" class="alert alert-danger">
+                                    <div *ngIf="f.I_NAME.errors.required">Finished Product Name is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12 col-md-6">
+                                <label for="p_unit">Unit <span class="text-danger">*</span></label>
+                                <select id="p_unit" formControlName="unit_value" placeholder="select"
+                                    class="form-control">
+                                    <option value="">Unit</option>
+                                    <option *ngFor=" let units of unit_master_list" [value]="units.I_UOM_CODE">
+                                        {{units.I_UOM_NAME}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="container materialForm">
+                    <form focusInvalidInput [formGroup]="materialForm">
+                        <div class="form-row">
+                            <div class="form-group col-12 col-md-2">
+                                <label for="M_I_CODENO">Raw Material Code <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="form-group col-12 col-md-4">
+                                <p-dropdown [optionLabel]="label" [options]="I_CODENO" formControlName="I_CODENO"
+                                    [filter]="true" (onChange)="onMaterialcodeNoSelected()" [showClear]="true"
+                                    placeholder="Select Raw Material Code" [resetFilterOnHide]="true"
+                                    [virtualScroll]="true" itemSize="10" styleClass="pop-dropdown">
+                                </p-dropdown>
+                                <div *ngIf="submitted && m.I_CODENO.errors" class="alert alert-danger">
+                                    <div *ngIf="m.I_CODENO.errors.required">Raw Material Code is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-12 col-md-2">
+                                <label for="M_I_NAME">Raw Material Name <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="form-group col-12 col-md-4">
+                                <p-dropdown [optionLabel]="label" [options]="I_NAME" formControlName="I_NAME"
+                                    [filter]="true" (onChange)="onMaterialNameSelected()" [showClear]="true"
+                                    placeholder="Select Raw Material Name" [resetFilterOnHide]="true"
+                                    [virtualScroll]="true" itemSize="10" styleClass="pop-dropdown">
+                                </p-dropdown>
+                                <div *ngIf="submitted && m.I_NAME.errors" class="alert alert-danger">
+                                    <div *ngIf="m.I_NAME.errors.required">Raw Material Name is Required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-4 col-md-3">
+                                <label for="m_unit">Unit <span class="text-danger">*</span></label>
+                                <select id="m_unit" formControlName="unit_value" placeholder="select"
+                                    class="form-control">
+                                    <option value="">Unit</option>
+                                    <option *ngFor="let units of unit_master_list" [value]="units.I_UOM_CODE">
+                                        {{units.I_UOM_NAME}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="d-sm-none d-md-block col-md-1"></div>
+                            <div class="form-group col-4 col-md-3">
+                                <label for="m_qty">Quantity</label>
+                                <input id="m_qty" type="number" class="form-control" formControlName="VQTY"
+                                    placeholder="0.00" [ngClass]="{ 'is-invalid': submitted && m.VQTY.errors }">
+                                <div *ngIf="submitted && m.VQTY.errors" class="alert alert-danger">
+                                    <div *ngIf="m.VQTY.errors.required">Quantity is Required</div>
+                                </div>
+                            </div>
+                            <div class="d-sm-none d-md-block col-md-1"></div>
+                            <div class="form-group col-4 col-md-3">
+                                <label for="m_sqty">Scrap Quantity</label>
+                                <input id="m_sqty" type="number" class="form-control" formControlName="SQTY"
+                                    placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12 material-add-btn">
+                                <button class="btn btn-primary" (click)="addMaterialToTable()">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <p-table #dt [value]="material_table" dataKey="id" editMode="row"
+                    [globalFilterFields]="['RAW_MAT_CDE','RAW_MAT_NAME','UNIT_VALUE','VQTY','SQTY']">
+                    <ng-template pTemplate="caption">
+                        <div style="float: right;">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search text-bold"></i>
+                                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    placeholder="Search..." style="width: 500px;" />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="RAW_MAT_CDE">Raw Material Code <p-sortIcon field="RAW_MAT_CDE">
+                                </p-sortIcon>
+                            </th>
+                            <th pSortableColumn="RAW_MAT_NAME">Raw Material Name <p-sortIcon field="RAW_MAT_NAME">
+                                </p-sortIcon>
+                            </th>
+                            <th pSortableColumn="UNIT_VALUE">Unit <p-sortIcon field="UNIT_VALUE">
+                                </p-sortIcon>
+                            </th>
+                            <th pSortableColumn="VQTY">Quantity <p-sortIcon field="VQTY">
+                                </p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SQTY">Scrap Quantity <p-sortIcon field="SQTY">
+                                </p-sortIcon>
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-material_table let-editing="editing" let-ri="rowIndex">
+                        <tr [pEditableRow]="material_table">
+                            <td pEditableColumn>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <p-dropdown [optionLabel]="label" [options]="I_CODENO"
+                                            [(ngModel)]="material_table.RAW_MAT_CDE" [filter]="true"
+                                            (onChange)="onMaterialTablecodeNo(ri)" [resetFilterOnHide]="true"
+                                            [virtualScroll]="true" itemSize="10" [style]="{'width':'100%'}">
+                                        </p-dropdown>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{material_table.RAW_MAT_CDE}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td pEditableColumn>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <p-dropdown [optionLabel]="label" [options]="I_NAME"
+                                            [(ngModel)]="material_table.RAW_MAT_NAME" [filter]="true"
+                                            (onChange)="onMaterialTablecodeName(ri)" [resetFilterOnHide]="true"
+                                            [virtualScroll]="true" itemSize="10" [style]="{'width':'100%'}">
+                                        </p-dropdown>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{material_table.RAW_MAT_NAME}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td>{{material_table.UNIT_VALUE}}</td>
+                            <td pEditableColumn>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText type="text" [(ngModel)]="material_table.VQTY">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{material_table.VQTY}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td pEditableColumn>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText type="text" [(ngModel)]="material_table.SQTY">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{material_table.SQTY}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td>
+                                <button *ngIf="!editing" pInitEditableRow class="btn btn-outline-warning mr-1 round"
+                                    (click)="onMaterialTableRowEditInit(material_table)"><i
+                                        class="far fa-edit"></i></button>
+                                <button *ngIf="!editing" class="btn btn-outline-danger mr-1 round"
+                                    (click)="onDeleteMaterialTable(ri)"><i class="fas fa-trash"></i></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
+                                    icon="pi pi-check" (click)="onMaterialTableRowEditSave(material_table, ri)"
+                                    class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
+                                    icon="pi pi-times" (click)="onMaterialTableRowEditCancel(material_table, ri)"
+                                    class="p-button-rounded p-button-text p-button-danger"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <div class="row">
+                    <button class="btn btn-outline-primary" (click)="save();"><i class="fas fa-save"></i> Save</button>
+                    <button class="btn btn-outline-secondary" (click)="resetMaterialForm();resetproductForm();"><i
+                            class="fas fa-undo"></i> Reset</button>
+                    <button class="btn btn-outline-danger"
+                        (click)="displayBasic=false;resetMaterialForm();resetproductForm();"><i
+                            class="fas fa-times"></i>
+                        Cancel</button>
+                </div>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>

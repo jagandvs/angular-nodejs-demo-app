@@ -8,7 +8,7 @@ router.get('/api/getUnitMaster', controller.getUnitMaster);
 router.post('/api/postBomMaster', controller.postBomMaster);
 router.post('/api/postBomDetail', controller.postBomDetail);
 router.put('/api/deleteBomTable', controller.deleteBomTable);
-// router.put('/api/deleteBomDetail', controller.deleteBomDetail);
+router.get('/api/getBomDetailTable', controller.getBomDetailTable);
 
 
 // router.get('/api/getAll', controller.getAll);
