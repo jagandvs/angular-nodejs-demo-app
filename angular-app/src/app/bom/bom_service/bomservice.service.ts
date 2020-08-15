@@ -44,6 +44,8 @@ export class BomserviceService {
   getBomDetailTable(bd_bm_code: number): Observable<BOM_DETAIL[]> {
     return this.http.get<BOM_DETAIL[]>(this.url + 'getBomDetailTable?bd_bm_code=' + bd_bm_code)
   }
+  updateBomMaster(bom_master: BOM_MASTER, BM_CODE: number): Observable<any> {
 
-
+    return this.http.put<any>(this.url + 'updateBomMaster?bm_code=' + BM_CODE, JSON.stringify(bom_master), this.httpOptions)
+  }
 }

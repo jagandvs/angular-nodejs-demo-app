@@ -24,6 +24,7 @@ export class BomComponent implements OnInit {
   bom_master: BOM_MASTER;
   unit_master_list: ITEM_UNIT_MASTER[];
   material_table: MATERIAL_TABLE[] = [];
+
   bom_detail: BOM_DETAIL[] = [];
   unit_value: string;
   productForm: FormGroup;
@@ -34,7 +35,7 @@ export class BomComponent implements OnInit {
   clonedProducts: { [s: string]: MATERIAL_TABLE; } = {};
   loading: boolean;
   newItem: boolean;
-
+  BM_CODE: number;
   constructor(
     private bomservice: BomserviceService,
     private route: ActivatedRoute,
@@ -84,26 +85,27 @@ export class BomComponent implements OnInit {
   }
   editItem(bom_master_table: BOM_MASTER_TABLE) {
     this.newItem = false;
-
     this.submitted = false;
+    this.material_table = [];
+    this.bom_detail = [];
+    this.BM_CODE = bom_master_table.BM_TABLE_CODE;
     this.f['I_CODENO'].setValue(bom_master_table.BM_TABLE_I_CODE);
     this.f['I_NAME'].setValue(bom_master_table.BM_TABLE_I_CODE);
-    this.getUnit(this.f['I_NAME'].value, -1)
+    this.getUnit(this.f['I_NAME'].value, -1);
     this.bomservice.getBomDetailTable(bom_master_table.BM_TABLE_CODE).subscribe(
       data => {
         this.bom_detail = data;
-
       }
-    )
-    for (let detail of this.bom_detail) {
-      this.material_table.push({ id: this.material_table.length + 1, RAW_MAT_CDE: this.materialCode(detail.BD_I_CODE), RAW_MAT_NAME: this.materialName(detail.BD_I_CODE), SQTY: detail.BD_SCRAPQTY, UNIT_VALUE: this.getUnitCodeValue(detail.BD_I_CODE), VQTY: detail.BD_VQTY });
-    }
-    console.log(this.material_table)
+    ).add(
+      () => {
+        for (let detail of this.bom_detail) {
+          this.material_table.push({ id: this.material_table.length + 1, RAW_MAT_CDE: this.materialCode(detail.BD_I_CODE), RAW_MAT_NAME: this.materialName(detail.BD_I_CODE), SQTY: detail.BD_SCRAPQTY, UNIT_VALUE: this.getUnitCodeValue(detail.BD_I_CODE), VQTY: detail.BD_VQTY, CODE: detail.BD_I_CODE });
+        }
+      }
+    );
     this.displayBasic = true;
-
   }
   deleteBomTableRow(bom_master_table: BOM_MASTER_TABLE, index: number) {
-    console.log(bom_master_table);
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete?',
       header: 'Delete Confirmation',
@@ -215,18 +217,42 @@ export class BomComponent implements OnInit {
       this.messageService.add({ key: "t2", severity: 'error', summary: 'Error', detail: 'Please Fill all required fields' });
       return;
     }
-    this.material_table.push({ id: this.material_table.length + 1, RAW_MAT_CDE: this.materialCode(this.m['I_CODENO'].value), RAW_MAT_NAME: this.materialName(this.m['I_NAME'].value), SQTY: this.m['SQTY'].value, UNIT_VALUE: this.materialValue(this.m['unit_value'].value), VQTY: this.m['VQTY'].value });
+    this.material_table.push({ id: this.material_table.length + 1, RAW_MAT_CDE: this.materialCode(this.m['I_CODENO'].value), RAW_MAT_NAME: this.materialName(this.m['I_NAME'].value), SQTY: this.m['SQTY'].value, UNIT_VALUE: this.materialValue(this.m['unit_value'].value), VQTY: this.m['VQTY'].value, CODE: this.m['I_NAME'].value });
     this.messageService.add({ key: "t2", severity: 'success', summary: 'success', detail: 'Material Added to the table' });
     this.resetMaterialForm();
     this.submitted = false;
+    console.log(this.material_table)
   }
 
-  onMaterialTableRowEditInit(material_table: MATERIAL_TABLE) {
+  onMaterialTableRowEditInit(material_table: MATERIAL_TABLE, index: number) {
+    console.log(material_table)
+
+    // this.material_table[index] = { id: material_table.id, RAW_MAT_CDE: material_table.CODE, RAW_MAT_NAME: this.materialName(material_table.CODE), SQTY: material_table.SQTY, UNIT_VALUE: material_table.UNIT_VALUE, VQTY: material_table.VQTY, CODE: material_table.CODE };
+
     this.clonedProducts[material_table.id] = { ...material_table };
+    console.log(this.clonedProducts)
+
   }
   onMaterialTableRowEditSave(material_table: MATERIAL_TABLE, index: number) {
+    console.log(material_table.RAW_MAT_CDE, this.clonedProducts[material_table.id].RAW_MAT_CDE)
+    let count = 0;
+    for (let table of this.material_table) {
+      if (table.RAW_MAT_CDE == material_table.RAW_MAT_CDE) {
+        count++;
+      }
+    }
+    // if(count>1){
+    //   this.ma
+    //   return;
+    // }
+    if (material_table.RAW_MAT_CDE == this.clonedProducts[material_table.id].RAW_MAT_CDE) {
+      this.material_table[index] = { id: material_table.id, RAW_MAT_CDE: material_table.RAW_MAT_CDE, RAW_MAT_NAME: material_table.RAW_MAT_NAME, SQTY: material_table.SQTY, UNIT_VALUE: material_table.UNIT_VALUE, VQTY: material_table.VQTY, CODE: Number(material_table.RAW_MAT_NAME) };
+    }
+    else {
+      this.material_table[index] = { id: material_table.id, RAW_MAT_CDE: this.materialCode(Number(material_table.RAW_MAT_CDE)), RAW_MAT_NAME: this.materialName(Number(material_table.RAW_MAT_NAME)), SQTY: material_table.SQTY, UNIT_VALUE: material_table.UNIT_VALUE, VQTY: material_table.VQTY, CODE: Number(material_table.RAW_MAT_NAME) };
+      console.log(this.material_table)
+    }
     delete this.clonedProducts[material_table.id];
-    this.material_table[index] = { id: this.material_table.length + 1, RAW_MAT_CDE: this.materialCode(Number(material_table.RAW_MAT_CDE)), RAW_MAT_NAME: this.materialName(Number(material_table.RAW_MAT_NAME)), SQTY: material_table.SQTY, UNIT_VALUE: material_table.UNIT_VALUE, VQTY: material_table.VQTY };
     this.messageService.add({ key: "t2", severity: 'success', summary: 'Success', detail: 'Raw Material   is updated' });
   }
   onMaterialTableRowEditCancel(material_table: MATERIAL_TABLE, index: number) {
@@ -260,40 +286,90 @@ export class BomComponent implements OnInit {
       this.messageService.add({ key: "t2", severity: 'error', summary: 'Error', detail: 'Please Fill all required fields' });
       return;
     }
-
-    this.bom_master = { BM_I_CODE: this.f['I_CODENO'].value, ES_DELETE: false, MODIFY: true }
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to save?',
-      header: 'Save Confirmation',
-      icon: 'fas fa-save',
-      accept: () => {
-        this.bomservice.saveBomMaster(this.bom_master).subscribe(
-          res => {
-            for (let materials of this.material_table) {
-              this.bom_detail.push({
-                BD_BM_CODE: res, BD_I_CODE: this.getMaterialCode(materials.RAW_MAT_CDE), BD_SCRAPQTY: materials.SQTY
-                , BD_VQTY: materials.VQTY, ES_DELETE: false
-              });
-            }
-            this.bomservice.saveBomDetail(this.bom_detail).subscribe(
-              data => {
-                this.displayBasic = false;
-                this.bom_detail = [];
-                this.resetMaterialForm();
-                this.resetproductForm();
-                this.messageService.add({ key: "t1", severity: 'success', summary: 'Success', detail: 'Added Successfully' });
-                this.bom_master_table.push({ BM_TABLE_CODE: res, BM_TABLE_I_CODE: this.bom_master.BM_I_CODE, BM_TABLE_I_CODENO: this.materialCode(this.bom_master.BM_I_CODE), BM_TABLE_NAME: this.materialName(this.bom_master.BM_I_CODE) });
-
+    if (this.newItem == true) {
+      this.bom_master = { BM_I_CODE: this.f['I_CODENO'].value }
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to save?',
+        header: 'Save Confirmation',
+        icon: 'fas fa-save',
+        accept: () => {
+          this.bomservice.saveBomMaster(this.bom_master).subscribe(
+            res => {
+              for (let materials of this.material_table) {
+                this.bom_detail.push({
+                  BD_BM_CODE: res, BD_I_CODE: this.getMaterialCode(materials.RAW_MAT_CDE), BD_SCRAPQTY: materials.SQTY
+                  , BD_VQTY: materials.VQTY, ES_DELETE: false
+                });
               }
-            )
+              this.bomservice.saveBomDetail(this.bom_detail).subscribe(
+                data => {
+                  this.displayBasic = false;
+                  this.bom_detail = [];
+                  this.resetMaterialForm();
+                  this.resetproductForm();
+                  this.messageService.add({ key: "t1", severity: 'success', summary: 'Success', detail: 'Added Successfully' });
+                  this.bom_master_table.push({ BM_TABLE_CODE: res, BM_TABLE_I_CODE: this.bom_master.BM_I_CODE, BM_TABLE_I_CODENO: this.materialCode(this.bom_master.BM_I_CODE), BM_TABLE_NAME: this.materialName(this.bom_master.BM_I_CODE) });
 
-          }
-        );
-      },
-      reject: () => {
-        this.bom_detail = [];
-      }
-    });
+                }
+              )
+
+            }
+          );
+        },
+        reject: () => {
+          this.bom_detail = [];
+        }
+      });
+    } else {
+
+      this.bom_master = { BM_I_CODE: this.f['I_CODENO'].value }
+      this.confirmationService.confirm({
+        message: 'Are you sure that you want to Update?',
+        header: 'Update Confirmation',
+        icon: 'fas fa-save',
+        accept: () => {
+          this.bomservice.updateBomMaster(this.bom_master, this.BM_CODE).subscribe(
+            res => {
+              console.log("save::" + this.material_table)
+              this.bom_detail = [];
+
+              for (let materials of this.material_table) {
+
+                this.bom_detail.push({
+                  BD_BM_CODE: this.BM_CODE, BD_I_CODE: this.getMaterialCode(materials.RAW_MAT_CDE), BD_SCRAPQTY: materials.SQTY
+                  , BD_VQTY: materials.VQTY, ES_DELETE: false
+                });
+                console.log(this.bom_detail)
+              }
+              this.bomservice.saveBomDetail(this.bom_detail).subscribe(
+                data => {
+                  this.displayBasic = false;
+                  this.bom_detail = [];
+
+                  this.resetMaterialForm();
+                  this.resetproductForm();
+                  this.loading = true;
+                  this.messageService.add({ key: "t1", severity: 'success', summary: 'Success', detail: 'Added Successfully' });
+                  this.bomservice.getBomMaster().subscribe(
+                    master => {
+                      this.bom_master_table = [];
+                      this.bom_master_list = master;
+                      for (let list of this.bom_master_list) {
+                        this.bom_master_table.push({ BM_TABLE_I_CODE: list.BM_I_CODE, BM_TABLE_CODE: list.BM_CODE, BM_TABLE_I_CODENO: this.materialCode(list.BM_I_CODE), BM_TABLE_NAME: this.materialName(list.BM_I_CODE) })
+                      }
+                      this.loading = false;
+                    }
+                  )
+                }
+              )
+            }
+          )
+        },
+        reject: () => {
+          this.bom_detail = [];
+        }
+      });
+    }
   }
 }
 

@@ -9,6 +9,7 @@ router.post('/api/postBomMaster', controller.postBomMaster);
 router.post('/api/postBomDetail', controller.postBomDetail);
 router.put('/api/deleteBomTable', controller.deleteBomTable);
 router.get('/api/getBomDetailTable', controller.getBomDetailTable);
+router.put('/api/updateBomMaster', controller.updateBomMaster);
 
 
 // router.get('/api/getAll', controller.getAll);

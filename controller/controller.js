@@ -67,7 +67,7 @@ class MainController {
                     .input('BD_I_CODE', sql.Int, data.BD_I_CODE)
                     .input('BD_SCRAPQTY', sql.Int, data.BD_SCRAPQTY)
                     .input('BD_VQTY', sql.Int, data.BD_SCRAPQTY)
-                    .query(queries.postBomDetail)
+                    .execute('postBomDetail')
             }
             res.json("Created successfully")
         } catch (error) {
@@ -75,6 +75,7 @@ class MainController {
             res.send(error.message)
         }
     }
+
 
     async deleteBomTable(req, res) {
         try {
@@ -96,6 +97,23 @@ class MainController {
                 .input('BD_BM_CODE', sql.Int, req.query.bd_bm_code)
                 .query(queries.getBomDetailTable)
             res.json(result.recordset)
+        } catch (error) {
+            res.status(500)
+            res.send(error.message)
+        }
+    }
+
+    async updateBomMaster(req, res) {
+        try {
+            const pool = await poolPromise
+            console.log("BM_CODE" + req.query.bm_code)
+            console.log(req.body.BM_I_CODE)
+            const result = await pool.request()
+                .input('BM_CODE', sql.Int, req.query.bm_code)
+                .input('BM_I_CODE', sql.Int, req.body.BM_I_CODE)
+                .query(queries.updateBomMaster)
+
+            res.json("DELETED successfully")
         } catch (error) {
             res.status(500)
             res.send(error.message)

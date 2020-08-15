@@ -8,7 +8,7 @@ import { UnitResolverService } from './_resolvers/unit-resolver.service';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: BomComponent },
   { path: 'BillOfMaterial', component: BomComponent, resolve: { item_master: ItemMasterResolverService, bom_master: BomMasterResolverService, unit_master: UnitResolverService } }
 ];
 

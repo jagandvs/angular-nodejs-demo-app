@@ -81,7 +81,7 @@
                                         class="fas fa-trash"></i></button>
                                 <button class="btn btn-outline-warning mr-1 round"
                                     (click)="editItem(bom_master_table)"><i class="far fa-edit"></i></button>
-                                <button class="btn btn-outline-info mr-1 round"><i class="far fa-eye"></i></button>
+                                <!-- <button class="btn btn-outline-info mr-1 round"><i class="far fa-eye"></i></button> -->
                             </td>
                         </tr>
                     </ng-template>
@@ -285,7 +285,7 @@
                             </td>
                             <td>
                                 <button *ngIf="!editing" pInitEditableRow class="btn btn-outline-warning mr-1 round"
-                                    (click)="onMaterialTableRowEditInit(material_table)"><i
+                                    (click)="onMaterialTableRowEditInit(material_table,index)"><i
                                         class="far fa-edit"></i></button>
                                 <button *ngIf="!editing" class="btn btn-outline-danger mr-1 round"
                                     (click)="onDeleteMaterialTable(ri)"><i class="fas fa-trash"></i></button>

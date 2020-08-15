@@ -5,6 +5,7 @@ export class MATERIAL_TABLE {
         public RAW_MAT_NAME: string,
         public UNIT_VALUE: string,
         public VQTY: number,
-        public SQTY: number
+        public SQTY: number,
+        public CODE: number
     ) { }
 }
