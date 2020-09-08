@@ -5,12 +5,13 @@ import { BOM_MASTER } from '../../model/BOM_MASTER';
 import { ITEM_MASTER } from 'src/app/model/ITEM_MASTER';
 import { ITEM_UNIT_MASTER } from 'src/app/model/ITEM_UNIT_MASTER';
 import { BOM_DETAIL } from 'src/app/model/BOM_DETAIL';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BomserviceService {
-  url: string = "/api/";
+  url = environment.baseUrl;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'

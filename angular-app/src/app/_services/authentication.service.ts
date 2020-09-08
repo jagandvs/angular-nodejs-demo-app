@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { USER_MASTER } from '../model/USER_MASTER'
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  url: string = "/api/";
+  url = environment.baseUrl;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
