@@ -14,8 +14,6 @@ import { BomserviceService } from './bom/bom_service/bomservice.service';
 import { BomMasterResolverService } from './_resolvers/bom-master-resolver.service';
 import { ItemMasterResolverService } from './_resolvers/item-master-resolver.service';
 import { UnitResolverService } from './_resolvers/unit-resolver.service';
-
-
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
@@ -24,14 +22,24 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FormDirective } from './form.directive';
+import { LoginComponent } from './login/login.component';
+import { AuthenticationService } from './_services/authentication.service';
+import { FooterComponent } from './footer/footer/footer.component';
+import { LogoutComponent } from './logout/logout.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
     HomeComponent,
     BomComponent,
-    FormDirective
+    FormDirective,
+    LoginComponent,
+    FooterComponent,
+    NavComponent,
+    LogoutComponent
+
   ],
   imports: [
     BrowserModule,
@@ -46,9 +54,10 @@ import { FormDirective } from './form.directive';
     DialogModule,
     DropdownModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+
   ],
-  providers: [BomserviceService, BomMasterResolverService, ItemMasterResolverService, UnitResolverService, MessageService, ConfirmationService],
+  providers: [BomserviceService, BomMasterResolverService, ItemMasterResolverService, UnitResolverService, MessageService, ConfirmationService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

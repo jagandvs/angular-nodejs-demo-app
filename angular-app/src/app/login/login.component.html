@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+            <div class="card card-body shadow rounded"
+                [ngStyle]="errorMessage?{'height': '350px'} : {'height': '300px'}">
+                <div class="header">
+                    <i class="far fa-user"></i>
+                </div>
+
+                <form [formGroup]="loginForm">
+                    <!-- <h3 class="text-center mt-0 mb-3"></h3> -->
+                    <div class="form-row">
+
+                        <div class="col-sm-10 offset-sm-1">
+                            <div class="alert alert-danger text-center" role="alert" *ngIf="errorMessage">
+                                <strong>{{errorMessage}}</strong>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-sm-8 offset-sm-2">
+                            <input class="form-control" type="text" formControlName="username" placeholder="Username"
+                                [ngClass]="{'invalid': submitted && f.username.errors, 'valid' : submitted && !f.username.errors && errorMessage==''}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-sm-8 offset-sm-2">
+                            <input class="form-control" type="password" formControlName="password"
+                                placeholder="Password"
+                                [ngClass]="{'invalid': submitted && f.password.errors, 'valid' : submitted && !f.password.errors   && errorMessage==''}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-8 offset-sm-2">
+                            <button value="Submit" class="text-white rounded" (click)="onSubmit();">Login</button>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

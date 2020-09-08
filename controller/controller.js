@@ -1,10 +1,31 @@
 const { sql, poolPromise } = require('../database/db')
+const { encryptPWD, comparePWD } = require('../helper/helper');
 const fs = require('fs');
 var rawdata = fs.readFileSync('./query/queries.json');
 var queries = JSON.parse(rawdata);
 
 class MainController {
 
+    async authenticate(req, res) {
+        try {
+            const pool = await poolPromise
+            const result = await pool.request()
+                .input('UM_USERNAME', sql.VarChar, req.body.username)
+                .execute('getUserDetails')
+            const matcher_True = comparePWD(req.body.password, result.recordset[0].UM_PASSWORD)
+            if (matcher_True) {
+                res.status(200).json(result.recordset[0])
+            } else {
+                res.status(401).json("UNAUTHORIZED")
+            }
+
+        }
+        catch (error) {
+            res.status(500)
+            res.send("user not found")
+            console.log(error)
+        }
+    }
     async getBomMaster(req, res) {
         try {
             const pool = await poolPromise
@@ -20,6 +41,7 @@ class MainController {
         try {
             const pool = await poolPromise
             const result = await pool.request()
+
                 .query(queries.getItemMaster)
             res.json(result.recordset)
         } catch (error) {

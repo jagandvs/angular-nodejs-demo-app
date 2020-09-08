@@ -1,0 +1,63 @@
+.card.card-body { 
+    position: relative;
+    top : 100px;
+    padding: 0px;
+    margin: 0px;
+    height: 300px;
+   
+   } 
+   .header { 
+     position: absolute;
+     left : 40%;
+     top : -35px;
+    width: 20%;
+    background-color: #056bf1;
+    display: flex;
+   justify-content: center;
+   align-items: center;
+   
+    border-radius: 50%;
+    height : 70px;
+    
+   }
+ .fa-user{
+     font-size: 2.5em;  
+     color:white;
+   }
+   form{
+       position: relative;
+       top : 20%;
+   }
+   input{
+       border-radius: 20px;
+       text-align: center;
+   }
+   input:focus{
+     box-shadow: 5px 10px 18px #056bf1;
+   }
+   .invalid{
+     box-shadow: 5px 10px 18px red;
+   }
+   .valid{
+     box-shadow: 5px 10px 18px green;
+   }
+ 
+   button{
+       cursor: pointer;
+       border-radius: 20px;
+       background-color : #056bf1;
+       width : 100%;
+       text-align: center;
+       border:none;
+       line-height: 30px;
+   }
+   button:hover{
+    box-shadow: 5px 10px 18px #388bf8;
+   }
+
+
+ 
+ 
+   
+ 
+ 
