@@ -6,7 +6,7 @@ import { ITEM_MASTER } from '../model/ITEM_MASTER';
 import { BOM_DETAIL } from '../model/BOM_DETAIL';
 import { MATERIAL_TABLE } from '../model/MATERIAL_TABLE';
 import { BomserviceService } from './bom_service/bomservice.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ITEM_UNIT_MASTER } from '../model/ITEM_UNIT_MASTER';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService, ConfirmationService, SelectItem, LazyLoadEvent } from 'primeng/api';
@@ -24,7 +24,7 @@ export class BomComponent implements OnInit {
   bom_master: BOM_MASTER;
   unit_master_list: ITEM_UNIT_MASTER[];
   material_table: MATERIAL_TABLE[] = [];
-
+  user: string;
   bom_detail: BOM_DETAIL[] = [];
   unit_value: string;
   productForm: FormGroup;
@@ -40,11 +40,13 @@ export class BomComponent implements OnInit {
     private bomservice: BomserviceService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    public router: Router,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit() {
+    this.user = localStorage.getItem('username')
     this.productForm = this.fb.group({
       I_CODENO: ['', Validators.required],
       unit_value: [{ value: '', disabled: true }, Validators.required],

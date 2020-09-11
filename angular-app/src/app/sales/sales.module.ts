@@ -5,12 +5,11 @@ import { SalesTransactionsComponent } from './sales-transactions/sales-transacti
 import { SalesReportsComponent } from './sales-reports/sales-reports.component';
 import { Routes, Router, RouterModule } from '@angular/router';
 import { NavSalesComponent } from './nav-sales/nav-sales.component'
-import { SharedModule } from 'primeng/api';
-
 const routes: Routes = [
   { path: 'masters', component: SalesMastersComponent },
   { path: 'reports', component: SalesReportsComponent },
   { path: 'transaction', component: SalesTransactionsComponent },
+
   { path: '', redirectTo: 'masters', pathMatch: 'full' }
 ];
 

@@ -62,14 +62,31 @@
                     <li class="nav-item hidden-sm-down"><a class="nav-link nav-menu-main menu-toggle hidden-xs"><i
                                 class="pi pi-align-justify"> </i></a></li>
                     <li class="nav-item"><a class="nav-link hidden-xs">FY 2020-2021</a></li>
-                    <li class="nav-item"><a class="nav-link hidden-xs" (click)="router.navigate(['sales/masters'])"><i
-                                class="fas fa-code-branch" style="font-size:0.9rem;"></i>Masters</a></li>
-                    <li class="nav-item"><a class="nav-link hidden-xs"
+                    <!-- <li class="nav-item"><a class="nav-link hidden-xs" (click)="router.navigate(['sales/masters'])"><i
+                                class="fas fa-code-branch" style="font-size:0.9rem;"></i>Masters</a></li> -->
+                    <li class="dropdown dropdown-user nav-item" style="padding-top:10px;"><a href="#"
+                            data-toggle="dropdown" class="nav-link dropdown-user-link"><i class="fas fa-code-branch"
+                                style="font-size:0.9rem;"></i>Masters<i class="fas fa-caret-down"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right"><a (click)="router.navigate(['logout'])"
+                                class="dropdown-item">Item Master</a>
+                        </div>
+                    </li>
+                    <li class="dropdown dropdown-user nav-item" style="padding-top:10px;"><a href="#"
+                            data-toggle="dropdown" class="nav-link dropdown-user-link"><i class="fas fa-exchange-alt"
+                                style="font-size:0.9rem;"></i>Transaction<i class="fas fa-caret-down"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right"><a
+                                (click)="router.navigate(['sales/transaction/BillOfMaterial'])"
+                                class="dropdown-item">Bill Of Material</a>
+                        </div>
+                    </li>
+
+                    <!-- <li class="nav-item"><a class="nav-link hidden-xs"
                             (click)="router.navigate(['sales/transaction'])"><i class="fas fa-exchange-alt"
                                 style="font-size:0.9rem;"></i>Transaction</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item"><a class="nav-link hidden-xs" (click)="router.navigate(['sales/reports'])"><i
                                 class="fas fa-file-alt" style="font-size:0.9rem;"></i>Reports</a></li>
+
 
                 </ul>
                 <ul class="nav navbar-nav float-xs-right">

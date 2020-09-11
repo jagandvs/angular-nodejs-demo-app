@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent, canActivate: [AuthGuard] },
-  // { path: 'BillOfMaterial', component: BomComponent, resolve: { item_master: ItemMasterResolverService, bom_master: BomMasterResolverService, unit_master: UnitResolverService } },
+  { path: 'sales/transaction/BillOfMaterial', component: BomComponent, resolve: { item_master: ItemMasterResolverService, bom_master: BomMasterResolverService, unit_master: UnitResolverService } },
+
   { path: 'sales', loadChildren: () => import('./sales/sales.module').then(mod => mod.SalesModule), canActivate: [AuthGuard] },
   { path: 'store', loadChildren: () => import('./store/store.module').then(mod => mod.StoreModule), canActivate: [AuthGuard] }
 ];
