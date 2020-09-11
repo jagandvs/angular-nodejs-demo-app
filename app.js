@@ -25,9 +25,9 @@ app.use(morgan('combined', { stream: accessLogStream }))
 
 app.use(router)
 
-const port = 3000
+const port = process.env.PORT || 3000;
 
-app.listen(process.env.PORT || port, (err) => {
+app.listen(port, (err) => {
     if (err)
         console.log('Unable to start the server!')
     else

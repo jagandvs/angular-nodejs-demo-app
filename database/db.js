@@ -1,12 +1,16 @@
-const sql = require('mssql/msnodesqlv8')
+const sql = require('mssql')
 
 const config = {
-    database: 'DEMO-APP',
+    user: 'sa',
+    password: 'Dj@004112',
     server: 'localhost',
-    driver: 'msnodesqlv8',
+    port: 1433,
+    database: 'DEMO-APP',
     options: {
-        trustedConnection: true
-    }
+        encrypt: true,
+        enableArithAbort: true
+    },
+
 }
 const poolPromise = new sql.ConnectionPool(config)
     .connect()
