@@ -5,59 +5,44 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-import { CardModule } from 'primeng/card';
-import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
-import { BomComponent } from './bom/bom.component';
-import { BomserviceService } from './bom/bom_service/bomservice.service';
-import { BomMasterResolverService } from './_resolvers/bom-master-resolver.service';
-import { ItemMasterResolverService } from './_resolvers/item-master-resolver.service';
-import { UnitResolverService } from './_resolvers/unit-resolver.service';
-import { TableModule } from 'primeng/table';
-import { InputTextModule } from 'primeng/inputtext';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FormDirective } from './form.directive';
 import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './_services/authentication.service';
 import { FooterComponent } from './footer/footer/footer.component';
 import { LogoutComponent } from './logout/logout.component';
-
-
+import { SharedModule } from './shared/shared/shared.module';
+import { PurchaseComponent } from './purchase/purchase.component';
+import { UtilityComponent } from './utility/utility.component';
+import { GstComponent } from './gst/gst.component';
+import { MastersComponent } from './masters/masters.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    BomComponent,
     FormDirective,
     LoginComponent,
     FooterComponent,
-    NavComponent,
-    LogoutComponent
+    LogoutComponent,
+    PurchaseComponent,
+    UtilityComponent,
+    GstComponent,
+    MastersComponent
 
   ],
   imports: [
     BrowserModule,
+    SharedModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    CardModule,
-    TableModule,
-    InputTextModule,
-    DialogModule,
-    DropdownModule,
-    ToastModule,
-    ConfirmDialogModule,
 
   ],
-  providers: [BomserviceService, BomMasterResolverService, ItemMasterResolverService, UnitResolverService, MessageService, ConfirmationService, AuthenticationService],
+  providers: [MessageService, ConfirmationService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

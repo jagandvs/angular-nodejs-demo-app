@@ -1,11 +1,11 @@
 export class MATERIAL_TABLE {
     constructor(
         public id: number,
-        public RAW_MAT_CDE: string,
-        public RAW_MAT_NAME: string,
-        public UNIT_VALUE: string,
+        public MAT_I_CODENO: string,
+        public MAT_I_NAME: string,
+        public MAT_I_UOM_NAME: string,
         public VQTY: number,
         public SQTY: number,
-        public CODE: number
+        public MAT_I_CODE: number
     ) { }
 }

@@ -41,8 +41,8 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu {
       position: absolute;
       right: 20px; }
   body.vertical-layout.vertical-menu.menu-expanded .main-menu .navigation li.has-sub > a:not(.mm-next):after {
-    content: "\ea0b";
-    font-family: "icomoon";
+    content: "\f078";
+    font-family: "FontAwesome";
     font-size: 1rem;
     display: inline-block;
     position: absolute;
@@ -51,7 +51,7 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu {
     transform: rotate(0deg);
     transition: -webkit-transform 0.2s ease-in-out; }
   body.vertical-layout.vertical-menu.menu-expanded .main-menu .navigation li.open > a:not(.mm-next):after {
-    transform: rotate(90deg); }
+    transform: rotate(180deg); }
   body.vertical-layout.vertical-menu.menu-expanded .main-menu .main-menu-footer {
     width: 240px; }
 
@@ -140,7 +140,7 @@ body.vertical-layout.vertical-menu.menu-collapsed .main-menu {
       body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation > li.navigation-header span {
         display: none; }
     body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation > li > a {
-      padding: 8px 20px;
+      padding: 8px 15px;
       text-align: center; }
       body.vertical-layout.vertical-menu.menu-collapsed .main-menu .navigation > li > a > span {
         visibility: hidden;

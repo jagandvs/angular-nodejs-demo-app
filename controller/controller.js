@@ -6,6 +6,52 @@ var queries = JSON.parse(rawdata);
 
 class MainController {
 
+    async getInvoiceDetails(req, res) {
+        try {
+            console.log(req.query.bm_code)
+            const pool = await poolPromise
+            const result = await pool.request()
+                .input('INM_CODE', sql.Int, req.query.bm_code)
+                .execute('InvoicePrint')
+            res.json(result.recordset)
+        } catch (error) {
+            res.status(500)
+            res.send(error.message)
+            console.log(error)
+        }
+    }
+
+    async TableResponse(req, res) {
+        try {
+            const pool = await poolPromise
+            const result = await pool.request()
+                .input('TableNames', sql.VarChar, req.body.tableNames)
+                .input('fieldNames', sql.VarChar, req.body.fieldNames)
+                .input('condition', sql.VarChar, req.body.condition)
+                .execute('SP_CM_TableResponse')
+            res.json(result.recordset)
+        } catch (error) {
+            res.status(500)
+            res.send(error.message)
+            console.log(error)
+        }
+    }
+
+    async deleteTable(req, res) {
+        try {
+            const pool = await poolPromise
+            const result = await pool.request()
+                .input('TableName', sql.VarChar, req.body.tableName)
+                .input('condition', sql.VarChar, req.body.condition)
+                .execute('SP_CM_DeleteTable')
+            res.json("DELETED successfully")
+        } catch (error) {
+            res.status(500)
+            res.send(error.message)
+        }
+
+    }
+
     async authenticate(req, res) {
         try {
             const pool = await poolPromise
@@ -136,6 +182,40 @@ class MainController {
                 .query(queries.updateBomMaster)
 
             res.json("DELETED successfully")
+        } catch (error) {
+            res.status(500)
+            res.send(error.message)
+        }
+    }
+
+    async insertItemMaster(req, res) {
+        try {
+            const pool = await poolPromise
+            const result = await pool.request()
+                .input('I_CODENO', sql.VarChar, req.body.I_CODENO)
+                .input('I_NAME', sql.VarChar, req.body.I_NAME)
+                .input('I_SCAT_CODE', sql.Int, req.body.I_SCAT_NAME)
+                .input('I_CAT_CODE', sql.Int, req.body.I_CAT_NAME)
+                .query(queries.insertItemMaster)
+
+            res.json("Created successfully")
+        } catch (error) {
+            res.status(500)
+            res.send(error.message)
+        }
+    }
+    async updateItemMaster(req, res) {
+        try {
+            const pool = await poolPromise
+            const result = await pool.request()
+                .input('I_CODENO', sql.VarChar, req.body.I_CODENO)
+                .input('I_NAME', sql.VarChar, req.body.I_NAME)
+                .input('I_SCAT_CODE', sql.Int, req.body.I_SCAT_NAME)
+                .input('I_CAT_CODE', sql.Int, req.body.I_CAT_NAME)
+                .input('I_CODE', sql.Int, req.body.I_CODE)
+                .query(queries.updateItemMaster)
+
+            res.json("Updated successfully")
         } catch (error) {
             res.status(500)
             res.send(error.message)

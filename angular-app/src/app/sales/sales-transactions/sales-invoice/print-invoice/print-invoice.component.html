@@ -1,0 +1,341 @@
+<div class="page" id="page" *ngIf="isDataLoaded">
+    <div class="subpage">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="heading">
+                    <h6>TAX-INVOICE</h6>
+                    <h5 style="text-align: right; padding:0px;">{{name}}</h5>
+                    <h2 class="font-weight-bold">{{invoiceDetails[0]?.CM_NAME}}</h2>
+                    <h5 class="text-uppercase">{{invoiceDetails[0]?.CM_ADDRESS1}}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h6 class="text-center">
+                    Tel:{{invoiceDetails[0].CM_PHONENO}}
+                </h6>
+            </div>
+            <div class="col-md-6">
+                <h6 class="text-center">
+                    E-Mail:{{invoiceDetails[0].CM_EMAILID}}
+                </h6>
+            </div>
+        </div>
+        <hr>
+
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <td>
+                        <b>GSTIN NO. :</b>
+                    </td>
+                    <td class="table_right_border">
+                        {{invoiceDetails[0].CM_GST_NO}}
+                    </td>
+                    <td>
+                        <b>INVOICE NO</b>
+                    </td>
+                    <td>
+                        {{invoiceDetails[0].InvoiceNumber}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="text-uppercase"><b>state :</b> {{invoiceDetails[0].SM_NAME}}
+                        </span>
+                    </td>
+                    <td class="table_right_border">
+                        <span class="text-uppercase" style="float : right;"><b>state code :</b>
+                            {{invoiceDetails[0].SM_STATE_CODE}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-uppercase"><b>E Way bill No
+                                :</b>
+                        </span>
+                    </td>
+                    <td>
+                        {{invoiceDetails[0].INM_DATE | date: 'dd/MM/yyyy'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="font-weight-bold text-uppercase">E Way bill no.
+                            :</span>
+                    </td>
+                    <td class="table_right_border">
+                        {{invoiceDetails[0].EWAYBILLNO}}
+                    </td>
+                    <td>
+                        <span class="font-weight-bold text-uppercase">Time of supply
+                            :</span>
+                    </td>
+                    <td>
+                        {{invoiceDetails[0].INM_ISSU_TIME}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_bottom_border">
+                        <span class="font-weight-bold text-uppercase">PAN NO :
+                        </span>
+                    </td>
+                    <td class="table_right_border table_bottom_border">
+                        {{invoiceDetails[0].CM_PAN_NO}}
+                    </td>
+                    <td class="table_bottom_border">
+                        <span class="font-weight-bold text-uppercase">WHETHER TAX ON REVERSE CHARGE :
+                        </span>
+                    </td>
+                    <td class="table_bottom_border">
+                        {{invoiceDetails[0].whethertaxonreversecharge}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center table_bottom_border table_right_border">
+                        <span class="font-weight-bold text-uppercase">details of receiver (billed to)</span>
+                    </td>
+                    <td colspan="2" class="text-center table_bottom_border ">
+                        <span class="font-weight-bold text-uppercase">details of consinee (billed to)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_right_border" colspan="2">
+                        <span class="font-weight-bold text-uppercase">{{invoiceDetails[0].P_NAME}}
+                        </span>
+                    </td>
+
+                    <td colspan="2">
+                        <span class="font-weight-bold text-uppercase">{{invoiceDetails[0].DeliveryAddressPartyName}}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="table_right_border">
+                        <span class="text-uppercase">{{invoiceDetails[0].P_ADD1}}
+                        </span>
+                    </td>
+                    <td colspan="2">
+                        <span class="text-uppercase">{{invoiceDetails[0].DeliveryAddressPartyAddress}}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 1px; padding-bottom: 1px;">
+                        <span class="text-uppercase"><b>PAN NO. :</b>
+                        </span>
+                    </td>
+                    <td class="table_right_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        {{invoiceDetails[0].P_PAN}}
+                    </td>
+                    <td style="padding-top: 1px; padding-bottom: 1px;">
+                        <span class="text-uppercase"><b>PAN NO. :</b>
+                        </span>
+                    </td>
+                    <td style="padding-top: 1px; padding-bottom: 1px;">
+                        {{invoiceDetails[0].DeliveryAddressPartyPAN}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 1px; padding-bottom: 1px;">
+                        <span class="text-uppercase"><b>state. :</b>
+                        </span>
+                    </td>
+                    <td class="table_right_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        {{invoiceDetails[0].DeliveryAddressPartyState}}
+                    </td>
+                    <td style="padding-top: 1px; padding-bottom: 1px;">
+                        <span class="text-uppercase"><b>state. :</b>
+                        </span>
+                    </td>
+                    <td style="padding-top: 1px; padding-bottom: 1px;">
+                        {{invoiceDetails[0].DeliveryAddressPartyStateName}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 1px; padding-bottom: 1px;">
+                        <span class="text-uppercase"><b>state code :</b>
+                        </span>
+                    </td>
+                    <td class="table_right_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        {{invoiceDetails[0].SM_COUNTRY_CODE}}
+                    </td>
+                    <td style="padding-top: 1px; padding-bottom: 1px;">
+                        <span class="text-uppercase"><b>state code :</b>
+                        </span>
+                    </td>
+                    <td style="padding-top: 1px; padding-bottom: 1px;">
+                        {{invoiceDetails[0].DeliveryAddressPartyStateCode}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_bottom_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        <span class="text-uppercase"><b>GST :</b>
+                        </span>
+                    </td>
+                    <td class="table_right_border table_bottom_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        {{invoiceDetails[0].GSTNO}}
+                    </td>
+                    <td class="table_bottom_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        <span class="text-uppercase"><b>GST :</b>
+                        </span>
+                    </td>
+                    <td class="table_bottom_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        {{invoiceDetails[0].DeliveryAddressPartyGSTNO}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_bottom_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        <span class="text-uppercase"><b>PO NO : </b>
+                        </span>{{invoiceDetails[0].CPOM_NO}}
+                    </td>
+                    <td class="table_right_border table_bottom_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        <b>Date :</b>
+                        {{invoiceDetails[0].CPOM_DATE | date: 'dd/MM/yyyy'}}
+                    </td>
+                    <td class="table_bottom_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        <span class="text-uppercase"><b>Vendor code :</b>
+                        </span>
+                    </td>
+                    <td class="table_bottom_border" style="padding-top: 1px; padding-bottom: 1px;">
+                        {{invoiceDetails[0].P_VEND_CODE}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="table">
+            <table class="table table-bordered">
+                <thead class="text-center">
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>Description</th>
+                        <th>HNS/SAC</th>
+                        <th>Packing</th>
+                        <th>Unit</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>AMOUNT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let invoice of invoiceDetails">
+                        <td>{{invoice.SrNo}}</td>
+                        <td>{{invoice.CPOD_CUST_I_CODE}}</td>
+                        <td>{{invoice.CPOD_CUST_I_NAME}}</td>
+                        <td>{{invoice.IND_PACK_DESC}}</td>
+                        <td>{{invoice.I_UOM_NAME}}</td>
+                        <td>{{invoice.IND_INQTY}}</td>
+                        <td>{{invoice.IND_RATE}}</td>
+                        <td style="text-align: right;">{{invoice.IND_AMT}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-uppercase ">
+                            Mode Of Transport : {{invoiceDetails[0].INM_TRANSPORT}}
+                        </td>
+                        <td colspan="2">
+                            Vehicle No : {{invoiceDetails[0].INM_VEH_NO}}
+                        </td>
+                        <td colspan="2">
+                            <span>Sub Total </span></td>
+                        <td class="font-weight-bold" style="text-align: right;">
+                            {{invoiceDetails[0].INM_NET_AMT}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-uppercase " style="border-right:none !important;">
+                            Transporter : {{invoiceDetails[0].INM_TRANSPORT_BY}}
+                        </td>
+                        <td colspan="2">
+                            L.R. : {{invoiceDetails[0].INM_LR_NO}}
+                        </td>
+                        <td colspan="3">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            CGST Value IN Words {{invoiceDetails[0].CGSTINWORDS}}
+                        </td>
+                        <td colspan="2">
+                            CGST({{invoiceDetails[0].INM_BEXCISE}}%)
+                        </td>
+                        <td style="text-align: right;">
+                            {{invoiceDetails[0].INM_BE_AMT}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            SGST Value In Words {{invoiceDetails[0].SGSTINWORDS}}
+                        </td>
+                        <td colspan="2">
+                            SGST({{invoiceDetails[0].INM_EDUC_CESS}}%)
+                        </td>
+                        <td style="text-align: right;">
+                            {{invoiceDetails[0].INM_EDUC_AMT}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            Invoice Value In Words {{invoiceDetails[0].GRANDTOTALINWORDS}}
+                        </td>
+                        <td colspan="2">
+                            <b>Grand Total</b>
+                        </td>
+                        <td style="text-align: right;">
+                            <b>{{invoiceDetails[0].INM_G_AMT}}</b>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-borderless">
+
+                    <tbody>
+                        <tr>
+                            <td rowspan="4" class="table_right_border text-justify table_bottom_border"
+                                style="font-size: 8px;">
+                                I/We hereby certified that my /our registration certificate under the GST Act,2017 is in
+                                force on the date on
+                                which the supply of the goods specified in this tax invoice is made by me/us and that
+                                the transaction of
+                                supplies covered by this tax invoice has been effected by me/us and it shall be
+                                accounted for the turnover of
+                                supplies while filling of return and the due tax, if any ,payable on the supplies has
+                                been paid or shall paid.
+                                Certified that the particulars given above are true and correct and the amount indicated
+                                represents the
+                                price actually charged and that there is no flow of additional consideration directly
+                                from buyer.
+                                Interest @24% P.A. will be charged on all overdue invoices
+                            </td>
+                            <td class="table_right_border text-center">
+                                Payment Terms: {{invoiceDetails[0].CPOM_PAY_TERM}}
+                            </td>
+                            <td class="text-center">
+                                For <b>{{invoiceDetails[0].CompanyNameinSignature}}</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="table_right_border table_bottom_border text-center font-weight-bold text-uppercase"
+                                style="vertical-align: bottom;">
+                                Receiver's signature
+                            </td>
+                            <td class="text-center table_bottom_border" style="vertical-align: bottom;">
+                                Authorized Signature
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <p>{{invoiceDetails[0].AtBottomofInvoice}}</p>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>

@@ -6,7 +6,7 @@
     <!-- / main menu header-->
     <!-- main menu content-->
     <div class="main-menu-content">
-        <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
+        <ul id="main-menu-navigation components" data-menu="menu-navigation" class="navigation navigation-main">
 
             <li class=" nav-item"><a routerLink="home"><i class="fas fa-home"></i><span
                         class="menu-title">Dashboard</span></a>
@@ -23,15 +23,65 @@
             <li class=" nav-item"><a (click)="router.navigate(['sales'])"><i class="fas fa-comments-dollar"></i><span
                         class="menu-title">Sale</span></a>
             </li>
-            <!-- <li class=" nav-item"><a routerLink="#"><i class="fas fa-file-invoice-dollar"></i><span
+
+            <li class=" nav-item has-sub"><a href="#"><i class="fas fa-code-branch"></i><span class="menu-title">Masters
+                    </span></a>
+                <ul class="menu-content">
+                    <li><a (click)="router.navigate(['masters/itemMaster'])" class="menu-item">Item Master</a>
+                    </li>
+                    <li><a class="menu-item">Item Unit Master</a>
+                    </li>
+                    <li><a (click)="router.navigate(['masters/itemCategoryMaster'])" class="menu-item">Item Category
+                            Master</a>
+                    </li>
+                    <li><a (click)="router.navigate(['masters/itemSubCategoryMaster'])" class="menu-item">Item
+                            Sub-Category Master</a>
+                    </li>
+                    <li><a (click)="router.navigate(['masters/hsnMaster'])" class="menu-item">HSN Master</a>
+                    </li>
+                    <li><a (click)="router.navigate(['masters/tallyMaster'])" class="menu-item">Tally Master</a>
+                    </li>
+                    <li><a (click)="router.navigate(['masters/bomMaster'])" class="menu-item">BOM Master</a>
+                    </li>
+                </ul>
+            </li>
+            <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main"
+                        class="menu-title">Menu levels</span></a>
+                <ul class="menu-content">
+                    <li><a href="#" data-i18n="nav.menu_levels.second_level" class="menu-item">Second level</a>
+                    </li>
+                    <li><a href="#" data-i18n="nav.menu_levels.second_level_child.main" class="menu-item">Second level
+                            child</a>
+                        <ul class="menu-content">
+                            <li><a href="#" data-i18n="nav.menu_levels.second_level_child.third_level"
+                                    class="menu-item">Third level</a>
+                            </li>
+                            <li><a href="#" data-i18n="nav.menu_levels.second_level_child.third_level_child.main"
+                                    class="menu-item">Third level child</a>
+                                <ul class="menu-content">
+                                    <li><a href="#"
+                                            data-i18n="nav.menu_levels.second_level_child.third_level_child.fourth_level1"
+                                            class="menu-item">Fourth level</a>
+                                    </li>
+                                    <li><a href="#"
+                                            data-i18n="nav.menu_levels.second_level_child.third_level_child.fourth_level2"
+                                            class="menu-item">Fourth level</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class=" nav-item"><a (click)="router.navigate(['sales'])"><i class="fas fa-comments-dollar"></i><span
+                        class="menu-title">Purchase</span></a>
+            </li>
+            <li class=" nav-item"><a routerLink="#"><i class="fas fa-file-invoice-dollar"></i><span
                         class="menu-title">GST</span></a>
             </li>
             <li class=" nav-item"><a routerLink="#"><i class="fas fa-sliders-h"></i><span
                         class="menu-title">Utility</span></a>
             </li>
-            <li class=" nav-item"><a routerLink="#"><i class="fas fa-user"></i><span
-                        class="menu-title">Account</span></a>
-            </li> -->
         </ul>
     </div>
     <!-- /main menu content-->

@@ -1,0 +1,16 @@
+<div class="pages" *ngIf="pg>0">
+    <app-print-invoice name="Original" [invoiceDetails]="invoiceDetails" [INM_CODE]="INM_CODE">
+    </app-print-invoice>
+</div>
+<div class="pages" *ngIf="pg>1">
+    <app-print-invoice name="Duplication" [invoiceDetails]="invoiceDetails" [INM_CODE]="INM_CODE">
+    </app-print-invoice>
+</div>
+<div class="pages" *ngIf="pg>2">
+    <app-print-invoice name="Triplicate" [invoiceDetails]="invoiceDetails" [INM_CODE]="INM_CODE">
+    </app-print-invoice>
+</div>
+<div class="pages" *ngIf="pg>3">
+    <app-print-invoice name="Quadraduplicate" [invoiceDetails]="invoiceDetails" [INM_CODE]="INM_CODE">
+    </app-print-invoice>
+</div>

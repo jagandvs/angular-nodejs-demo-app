@@ -1,0 +1,118 @@
+.subpage {
+    border: 5px black solid;
+    padding: 10px;
+    border-radius: 5px;
+    border-style: double;
+
+}
+
+/* @media print {
+
+.page {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    page-break-after: always;
+}
+
+}  */
+
+@media print{
+    
+    .page{
+        margin: 10px;
+        page-break-after: auto;
+    }
+
+  }
+html body.fixed-navbar{
+    padding-top: 0px !important;
+}
+
+.heading {
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.heading h1 {
+  
+    font-family: "Times New Roman", Times, serif;
+}
+
+.heading h6 {
+    font-size: 16px;
+}
+
+hr {
+    border: 2px solid;
+    padding: 0px;
+    margin: 5px;
+}
+
+.table tr .table_right_border {
+    border-right: 2px solid;
+}
+.table tr .table_left_border {
+    border-right: 2px solid;
+}
+.table .table .table_right_border{
+    border-right: 2px solid;
+}
+.table .table .table_left_border{
+    border-left: 2px solid;
+}
+
+.table tr .table_bottom_border {
+    border-bottom: 2px solid;
+}
+
+.table-bordered,
+.table-bordered tr th,
+.table-bordered tr td {
+    border: 2px solid;
+}
+
+.table-borderless tr td{
+    width:25%;
+}
+.table-borderless tr td,
+.table-bordered tr td {
+    padding: 3px;
+}
+.table-bordered tr th{
+   text-align: center;
+   
+}
+.table-bordered tr.noBorder td {
+    border: 0;
+  }
+
+.table .table {
+    margin: 0px;
+    background: none;
+     font-size: 14px;
+}
+
+.table .table th {
+    padding: 2px;
+    margin: 0px;
+   
+
+}
+.table{
+    font-size: 12px;
+    margin-bottom: 1px;
+}
+.table h6{
+    font-size:12px;
+}
+.subpage { page-break-after: always; }
+.subpage:last-child { page-break-after: avoid; }
+
+.pd-1{
+padding: 1px;
+}

@@ -4,24 +4,18 @@ import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { USER_MASTER } from '../model/USER_MASTER'
 import { environment } from 'src/environments/environment';
-
+import { login } from '../_helpers/navigation-urls'
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  url = environment.baseUrl;
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
   constructor(
     private http: HttpClient,
     private router: Router
   ) { }
   login(username: string, password: string) {
 
-    return this.http.post<USER_MASTER>(this.url + "users/authenticate", { username: username, password: password })
+    return this.http.post<USER_MASTER>(login, { username: username, password: password })
   }
 
   logout() {
