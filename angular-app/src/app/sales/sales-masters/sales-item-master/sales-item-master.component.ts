@@ -58,7 +58,9 @@ export class SalesItemMasterComponent implements OnInit {
       I_CODENO: ['', Validators.required],
       I_NAME: ['', Validators.required],
       I_CAT_NAME: ['', Validators.required],
-      I_SCAT_NAME: [{ value: '', disabled: true }, Validators.required]
+      I_SCAT_NAME: [{ value: '', disabled: true }, Validators.required],
+      I_DRAW_NO: [''],
+      I_SPECIFICATION: ['']
     });
   }
 
@@ -143,7 +145,7 @@ export class SalesItemMasterComponent implements OnInit {
 
   }
   save() {
-    console.log(this.f['I_CODENO'].value, this.f['I_NAME'].value, this.f['I_SCAT_NAME'].value, this.f['I_CAT_NAME'].value)
+    console.log(this.f['I_CODENO'].value, this.f['I_NAME'].value, this.f['I_SCAT_NAME'].value, this.f['I_CAT_NAME'].value);
     this.submitted = true;
     if (this.itemForm.invalid) {
       this.messageService.add({ key: "t2", severity: 'error', summary: 'Error', detail: 'Please Fill all required fields' });
@@ -155,7 +157,7 @@ export class SalesItemMasterComponent implements OnInit {
         header: 'Save Confirmation',
         icon: 'fas fa-save',
         accept: () => {
-          this.service.insertItemMaster(this.f['I_CODENO'].value, this.f['I_NAME'].value, this.f['I_SCAT_NAME'].value, this.f['I_CAT_NAME'].value).subscribe(
+          this.service.insertItemMaster(this.f['I_CODENO'].value, this.f['I_NAME'].value, this.f['I_SCAT_NAME'].value, this.f['I_CAT_NAME'].value, this.f['I_DRAW_NO'].value, this.f['I_SPECIFICATION'].value).subscribe(
             res => {
               this.itemMasterTableResponse = [];
 

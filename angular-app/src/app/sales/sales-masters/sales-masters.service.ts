@@ -25,8 +25,9 @@ export class SalesMastersService {
     let body = { fieldNames: 'SCAT_CODE,SCAT_CAT_CODE,SCAT_DESC', tableNames: 'ITEM_SUBCATEGORY_MASTER', condition: 'ES_DELETE=0' }
     return this.http.post<any[]>(TableResponse, body, httpOptions)
   }
-  insertItemMaster(I_CODENO: string, I_NAME: string, I_SCAT_NAME: number, I_CAT_NAME: number): Observable<any> {
-    let body = { I_CODENO: I_CODENO, I_NAME: I_NAME, I_SCAT_NAME: I_SCAT_NAME, I_CAT_NAME: I_CAT_NAME }
+  // tslint:disable-next-line: max-line-length
+  insertItemMaster(I_CODENO: string, I_NAME: string, I_SCAT_NAME: number, I_CAT_NAME: number, I_DRAW_NO: string, I_SPECIFICATION: string ): Observable<any> {
+    let body = { I_CODENO: I_CODENO, I_NAME: I_NAME, I_SCAT_NAME: I_SCAT_NAME, I_CAT_NAME: I_CAT_NAME , I_DRAW_NO: I_DRAW_NO , I_SPECIFICATION: I_SPECIFICATION }
     return this.http.post<any>(insertItemMaster, body, httpOptions)
   }
   updateItemMaster(I_CODENO: string, I_NAME: string, I_SCAT_NAME: number, I_CAT_NAME: number, I_CODE: number): Observable<any> {

@@ -13,12 +13,14 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SalesItemUnitMasterComponent } from './sales-item-unit-master/sales-item-unit-master.component';
 const routes: Routes = [
   { path: 'itemMaster', component: SalesItemMasterComponent },
+  { path: 'itemUnitMaster', component: SalesItemUnitMasterComponent }
 ];
 
 @NgModule({
-  declarations: [SalesItemMasterComponent],
+  declarations: [SalesItemMasterComponent, SalesItemUnitMasterComponent],
   imports: [
     CommonModule,
     SharedModule,

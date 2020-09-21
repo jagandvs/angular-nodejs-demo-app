@@ -47,7 +47,8 @@ export class SalesBillOfMaterialComponent implements OnInit {
 
     this.bomTableResponse = this.route.snapshot.data['bomTable'];
     this.itemTableResponse = this.route.snapshot.data['itemTable'];
-
+    console.log(this.itemTableResponse);
+    console.log(this.bomTableResponse);
     this.productForm = this.fb.group({
       I_CODENO: ['', Validators.required],
       I_UOM_NAME: [{ value: '', disabled: true }, Validators.required],

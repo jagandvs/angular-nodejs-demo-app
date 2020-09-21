@@ -6,7 +6,9 @@ export class ITEM_MASTER {
         public I_UOM_NAME: string,
         public I_CAT_NAME: string,
         public I_CAT_CODE: number,
-        public I_SUBCAT_CODE: number
+        public I_SUBCAT_CODE: number,
+        public I_DRAW_NO: string,
+        public I_SPECIFICATION: string
 
     ) {
 

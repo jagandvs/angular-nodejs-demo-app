@@ -196,6 +196,8 @@ class MainController {
                 .input('I_NAME', sql.VarChar, req.body.I_NAME)
                 .input('I_SCAT_CODE', sql.Int, req.body.I_SCAT_NAME)
                 .input('I_CAT_CODE', sql.Int, req.body.I_CAT_NAME)
+                .input('I_DRAW_NO', sql.VarChar, req.body.I_DRAW_NO)
+                .input('I_SPECIFICATION', sql.VarChar, req.body.I_SPECIFICATION)
                 .query(queries.insertItemMaster)
 
             res.json("Created successfully")

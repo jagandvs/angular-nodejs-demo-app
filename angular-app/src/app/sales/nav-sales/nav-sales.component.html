@@ -30,6 +30,9 @@
                         <div class="dropdown-menu dropdown-menu-right"><a
                                 (click)="router.navigate(['sales/masters/itemMaster'])" class="dropdown-item">Item
                                 Master</a>
+                                <a
+                                (click)="router.navigate(['sales/masters/itemUnitMaster'])" class="dropdown-item">Item Unit
+                                Master</a>
                         </div>
                     </li>
                     <li class="dropdown dropdown-user nav-item" style="padding-top:10px;"><a href="#"
@@ -38,8 +41,8 @@
                         <div class="dropdown-menu dropdown-menu-right"><a
                                 (click)="router.navigate(['sales/transaction/bom'])" class="dropdown-item">Bill Of
                                 Material</a>
-                            <!-- <a (click)="router.navigate(['sales/transaction/invoice'])"
-                                class="dropdown-item">Invoice</a> -->
+                            <a (click)="router.navigate(['sales/transaction/salesorder'])"
+                                class="dropdown-item">Sales Order</a>
                         </div>
                     </li>
 

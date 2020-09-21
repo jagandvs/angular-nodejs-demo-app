@@ -16,16 +16,18 @@ import { SalesTransactionsService } from './sales-transactions.service';
 import { BomTableResolverService } from '../../_resolvers/bomTable-resolver.service';
 import { ItemTableResolverService } from '../../_resolvers/itemTable-resolver.service';
 import { SalesInvoiceComponent } from './sales-invoice/sales-invoice.component';
-import { PrintInvoiceComponent } from './sales-invoice/print-invoice/print-invoice.component'
+import { PrintInvoiceComponent } from './sales-invoice/print-invoice/print-invoice.component';
+import { SalesSalesOrderComponent } from './sales-sales-order/sales-sales-order.component'
 const routes: Routes = [
   { path: 'bom', component: SalesBillOfMaterialComponent, resolve: { bomTable: BomTableResolverService, itemTable: ItemTableResolverService } },
-  { path: 'invoice', component: SalesInvoiceComponent }
+  { path: 'invoice', component: SalesInvoiceComponent },
+  { path: 'salesorder', component: SalesSalesOrderComponent }
 
 ];
 
 
 @NgModule({
-  declarations: [SalesBillOfMaterialComponent, SalesInvoiceComponent, PrintInvoiceComponent],
+  declarations: [SalesBillOfMaterialComponent, SalesInvoiceComponent, PrintInvoiceComponent, SalesSalesOrderComponent],
   imports: [
     CommonModule,
     SharedModule,

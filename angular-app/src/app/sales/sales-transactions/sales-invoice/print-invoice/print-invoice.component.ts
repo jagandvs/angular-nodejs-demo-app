@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+
 import { SalesTransactionsService } from '../../sales-transactions.service';
 
 @Component({

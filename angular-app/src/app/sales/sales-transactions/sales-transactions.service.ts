@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BomTableResponse } from '../../model/BomTableResponse';
 import { ItemTableResponse } from '../../model/ItemTableResponse';
+import { SalesOrderTableResponse } from '../../model/SalesOrderTableResponse';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { deleteTable, getInvoiceDetails, httpOptions, postBomDetail, postBomMaster, TableResponse, updateBomMaster } from '../../_helpers/navigation-urls'
 import { Observable } from 'rxjs';
 import { BOM_MASTER } from 'src/app/model/BOM_MASTER';
 import { BOM_DETAIL } from 'src/app/model/BOM_DETAIL';
+import { SalesOrderTypeMaster } from 'src/app/model/SalesOrderTypeMaster';
+import { PartyMaster } from 'src/app/model/PartyMaster';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +24,22 @@ export class SalesTransactionsService {
     let body = { fieldNames: 'BM_CODE,BM_I_CODE,I_CODENO,I_NAME', tableNames: 'BOM_MASTER,ITEM_MASTER', condition: 'BM_I_CODE=I_CODE AND BOM_MASTER.ES_DELETE=0 AND ITEM_MASTER.ES_DELETE=0' }
     return this.http.post<BomTableResponse[]>(TableResponse, body, httpOptions)
   }
+
+  getPartyMasterTableResponse (): Observable<PartyMaster[]> {
+    let body = { fieldNames: 'P_CODE,P_NAME', tableNames: 'PARTY_MASTER', condition: 'ES_DELETE=0' }
+    return this.http.post<PartyMaster[]>(TableResponse, body, httpOptions)
+  }
+
+  getSalesOrderTypeTableResponse (): Observable<SalesOrderTypeMaster[]> {
+    let body = { fieldNames: 'SO_T_CODE,SO_T_DESC', tableNames: 'SO_TYPE_MASTER', condition: 'ES_DELETE=0' }
+    return this.http.post<SalesOrderTypeMaster[]>(TableResponse, body, httpOptions)
+  }
+
+  getSalesOrderTableResponse(): Observable<SalesOrderTableResponse[]> {
+    let body = { fieldNames: 'CPOM_CODE,CPOM_NO,CPOM_PONO,P_NAME,CPOM_DATE', tableNames: 'CUSTPO_MASTER,PARTY_MASTER', condition: 'CPOM_P_CODE=P_CODE and CUSTPO_MASTER.ES_DELETE=0 and PARTY_MASTER.ES_DELETE=0' }
+    return this.http.post<SalesOrderTableResponse[]>(TableResponse, body, httpOptions)
+  }
+
   getItemTableResponse(): Observable<ItemTableResponse[]> {
     let body = { fieldNames: 'I_CODE,I_UOM_NAME,I_CODENO,I_NAME', tableNames: 'ITEM_UNIT_MASTER,ITEM_MASTER', condition: 'ITEM_MASTER.I_UOM_CODE=ITEM_UNIT_MASTER.I_UOM_CODE AND ITEM_MASTER.ES_DELETE=0 AND ITEM_UNIT_MASTER.ES_DELETE=0' }
     return this.http.post<ItemTableResponse[]>(TableResponse, body, httpOptions)
