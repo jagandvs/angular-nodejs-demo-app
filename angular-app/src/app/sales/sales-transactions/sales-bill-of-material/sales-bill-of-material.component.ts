@@ -8,6 +8,7 @@ import { BOM_MASTER } from 'src/app/model/BOM_MASTER';
 import { BOM_MASTER_LIST } from 'src/app/model/BOM_MASTER_LIST';
 import { ItemTableResponse } from 'src/app/model/ItemTableResponse';
 import { MATERIAL_TABLE } from 'src/app/model/MATERIAL_TABLE';
+import { CommonServicesService } from 'src/app/_services/common-services.service';
 import { SalesTransactionsService } from '../sales-transactions.service';
 
 @Component({
@@ -26,9 +27,14 @@ export class SalesBillOfMaterialComponent implements OnInit {
   newItem: boolean;
   submitted: boolean;
   BM_CODE: number;
+  loading: boolean;
 
   productForm: FormGroup;
   materialForm: FormGroup;
+
+  bomFieldNames: string = 'BM_CODE,BM_I_CODE,I_CODENO,I_NAME';
+  bomTableNames: string = 'BOM_MASTER,ITEM_MASTER';
+  bomCondition: string = 'BM_I_CODE=I_CODE AND BOM_MASTER.ES_DELETE=0 AND ITEM_MASTER.ES_DELETE=0';
 
   I_CODENO: SelectItem[] = [];
   I_NAME: SelectItem[] = [];
@@ -40,15 +46,31 @@ export class SalesBillOfMaterialComponent implements OnInit {
     private router: Router,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private commonService: CommonServicesService
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
 
-    this.bomTableResponse = this.route.snapshot.data['bomTable'];
-    this.itemTableResponse = this.route.snapshot.data['itemTable'];
-    console.log(this.itemTableResponse);
-    console.log(this.bomTableResponse);
+    // BOM MASTER TABLE
+    this.commonService.getTableResponse(this.bomFieldNames, this.bomTableNames, this.bomCondition).subscribe(
+      data => {
+        this.bomTableResponse = data;
+        this.loading = false;
+      });
+
+    // DROPDOWN ITEMS
+    this.commonService.getTableResponse('I_CODE,I_UOM_NAME,I_CODENO,I_NAME', 'ITEM_UNIT_MASTER,ITEM_MASTER', 'ITEM_MASTER.I_UOM_CODE=ITEM_UNIT_MASTER.I_UOM_CODE AND ITEM_MASTER.ES_DELETE=0 AND ITEM_UNIT_MASTER.ES_DELETE=0').subscribe(
+      data => {
+        this.itemTableResponse = data;
+        for (let items of this.itemTableResponse) {
+          this.I_CODENO.push({ label: items.I_CODENO, value: items.I_CODE });
+          this.I_NAME.push({ label: items.I_NAME, value: items.I_CODE });
+          this.I_UOM_NAME.push({ label: items.I_UOM_NAME, value: items.I_CODE });
+        }
+      });
+
     this.productForm = this.fb.group({
       I_CODENO: ['', Validators.required],
       I_UOM_NAME: [{ value: '', disabled: true }, Validators.required],
@@ -61,12 +83,6 @@ export class SalesBillOfMaterialComponent implements OnInit {
       VQTY: ['', Validators.required],
       SQTY: ['']
     });
-
-    for (let items of this.itemTableResponse) {
-      this.I_CODENO.push({ label: items.I_CODENO, value: items.I_CODE });
-      this.I_NAME.push({ label: items.I_NAME, value: items.I_CODE });
-      this.I_UOM_NAME.push({ label: items.I_UOM_NAME, value: items.I_CODE });
-    }
   }
 
   get f() {
@@ -76,7 +92,6 @@ export class SalesBillOfMaterialComponent implements OnInit {
     return this.materialForm.controls;
   }
   printInvoice(bm_code: string, pg: number) {
-
     this.router.navigate(['sales/transaction/invoice'], { queryParams: { bm_code: bm_code, pg: pg } })
   }
 
@@ -292,7 +307,7 @@ export class SalesBillOfMaterialComponent implements OnInit {
                   this.displayBasic = false;
                   this.bom_detail = [];
                   this.bomTableResponse = [];
-                  this.service.getBomTableResponse().subscribe(
+                  this.commonService.getTableResponse(this.bomFieldNames, this.bomTableNames, this.bomCondition).subscribe(
                     master => {
                       this.bomTableResponse = master;
                     }
@@ -313,7 +328,24 @@ export class SalesBillOfMaterialComponent implements OnInit {
     }
   }
 
-
+  exportExcel() {
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(this.bomTableResponse);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, "BillOfMaterial");
+    });
+  }
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    import("file-saver").then(FileSaver => {
+      let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+      let EXCEL_EXTENSION = '.xlsx';
+      const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE
+      });
+      FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    });
+  }
 
 
 }

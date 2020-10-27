@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { USER_MASTER } from '../model/USER_MASTER'
+import { COMPANY_MASTER } from '../model/COMPANY_MASTER'
+
 import { environment } from 'src/environments/environment';
-import { login } from '../_helpers/navigation-urls'
+import { getCompanyDetails, httpOptions, login, TableResponse } from '../_helpers/navigation-urls'
+import { core } from '@angular/compiler';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +27,10 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('username');
     this.router.navigate(['/login']);
+  }
+  getCompanyDetails(): Observable<COMPANY_MASTER[]> {
+    let body = { fieldNames: '*', tableNames: 'COMPANY_MASTER', condition: '' }
+    return this.http.post<COMPANY_MASTER[]>(TableResponse, body, httpOptions);
   }
 
 }

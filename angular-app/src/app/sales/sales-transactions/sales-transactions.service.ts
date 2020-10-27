@@ -20,17 +20,13 @@ export class SalesTransactionsService {
     private http: HttpClient
   ) { }
 
-  getBomTableResponse(): Observable<BomTableResponse[]> {
-    let body = { fieldNames: 'BM_CODE,BM_I_CODE,I_CODENO,I_NAME', tableNames: 'BOM_MASTER,ITEM_MASTER', condition: 'BM_I_CODE=I_CODE AND BOM_MASTER.ES_DELETE=0 AND ITEM_MASTER.ES_DELETE=0' }
-    return this.http.post<BomTableResponse[]>(TableResponse, body, httpOptions)
-  }
 
-  getPartyMasterTableResponse (): Observable<PartyMaster[]> {
+  getPartyMasterTableResponse(): Observable<PartyMaster[]> {
     let body = { fieldNames: 'P_CODE,P_NAME', tableNames: 'PARTY_MASTER', condition: 'ES_DELETE=0' }
     return this.http.post<PartyMaster[]>(TableResponse, body, httpOptions)
   }
 
-  getSalesOrderTypeTableResponse (): Observable<SalesOrderTypeMaster[]> {
+  getSalesOrderTypeTableResponse(): Observable<SalesOrderTypeMaster[]> {
     let body = { fieldNames: 'SO_T_CODE,SO_T_DESC', tableNames: 'SO_TYPE_MASTER', condition: 'ES_DELETE=0' }
     return this.http.post<SalesOrderTypeMaster[]>(TableResponse, body, httpOptions)
   }
@@ -40,10 +36,7 @@ export class SalesTransactionsService {
     return this.http.post<SalesOrderTableResponse[]>(TableResponse, body, httpOptions)
   }
 
-  getItemTableResponse(): Observable<ItemTableResponse[]> {
-    let body = { fieldNames: 'I_CODE,I_UOM_NAME,I_CODENO,I_NAME', tableNames: 'ITEM_UNIT_MASTER,ITEM_MASTER', condition: 'ITEM_MASTER.I_UOM_CODE=ITEM_UNIT_MASTER.I_UOM_CODE AND ITEM_MASTER.ES_DELETE=0 AND ITEM_UNIT_MASTER.ES_DELETE=0' }
-    return this.http.post<ItemTableResponse[]>(TableResponse, body, httpOptions)
-  }
+
   deleteTable(tableName: string, condition: string): Observable<any> {
     let body = { tableName: tableName, condition: condition }
     return this.http.put(deleteTable, body, httpOptions)

@@ -30,6 +30,7 @@ class MainController {
                 .input('condition', sql.VarChar, req.body.condition)
                 .execute('SP_CM_TableResponse')
             res.json(result.recordset)
+
         } catch (error) {
             res.status(500)
             res.send(error.message)

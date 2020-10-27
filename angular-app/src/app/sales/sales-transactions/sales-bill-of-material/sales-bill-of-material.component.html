@@ -1,6 +1,7 @@
-<app-nav-sales></app-nav-sales>
-<div class="app-content content container-fluid">
-    <div class="content-wrapper">
+<div class="wrapper">
+    <app-nav></app-nav>
+    <div id="content">
+        <app-nav-sales></app-nav-sales>
         <!-- header section -->
         <div class="content-header row">
             <div class="content-header-left col-md-6 col-xs-12 mb-1">
@@ -34,7 +35,7 @@
                 <p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000" key="c1"></p-confirmDialog>
                 <!-- primeng table -->
                 <p-table #dt [value]="bomTableResponse" [rows]="10" [paginator]="true"
-                    [globalFilterFields]="['I_CODENO','I_NAME']" [rowsPerPageOptions]="[10,25,50]">
+                    [globalFilterFields]="['I_CODENO','I_NAME']" [rowsPerPageOptions]="[10,25,50]" [loading]="loading">
 
                     <ng-template pTemplate="caption">
                         <div class="row justify-content-between">
@@ -43,6 +44,9 @@
                                         class="fas fa-plus"></i></button>
                             </div>
                             <div class="col-md-3">
+                                <button type="button" class="btn btn-success" (click)="exportExcel()" pTooltip="CSV"
+                                    tooltipPosition="bottom"><i class="fas fa-file-excel"></i> Export
+                                    Excel</button>
                             </div>
                             <div class="col-md-3">
                             </div>

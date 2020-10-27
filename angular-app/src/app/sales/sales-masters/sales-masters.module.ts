@@ -13,6 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CommonServicesService } from '../../_services/common-services.service'
 import { SalesItemUnitMasterComponent } from './sales-item-unit-master/sales-item-unit-master.component';
 const routes: Routes = [
   { path: 'itemMaster', component: SalesItemMasterComponent },
@@ -36,6 +37,6 @@ const routes: Routes = [
     ConfirmDialogModule,
     RouterModule.forChild(routes)
   ],
-  providers: [SalesMastersService]
+  providers: [SalesMastersService, CommonServicesService]
 })
 export class SalesMastersModule { }

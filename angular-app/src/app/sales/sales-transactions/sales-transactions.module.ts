@@ -13,13 +13,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SalesTransactionsService } from './sales-transactions.service';
-import { BomTableResolverService } from '../../_resolvers/bomTable-resolver.service';
-import { ItemTableResolverService } from '../../_resolvers/itemTable-resolver.service';
 import { SalesInvoiceComponent } from './sales-invoice/sales-invoice.component';
 import { PrintInvoiceComponent } from './sales-invoice/print-invoice/print-invoice.component';
 import { SalesSalesOrderComponent } from './sales-sales-order/sales-sales-order.component'
 const routes: Routes = [
-  { path: 'bom', component: SalesBillOfMaterialComponent, resolve: { bomTable: BomTableResolverService, itemTable: ItemTableResolverService } },
+  { path: 'bom', component: SalesBillOfMaterialComponent },
   { path: 'invoice', component: SalesInvoiceComponent },
   { path: 'salesorder', component: SalesSalesOrderComponent }
 
@@ -43,6 +41,6 @@ const routes: Routes = [
     ConfirmDialogModule,
     RouterModule.forChild(routes)
   ],
-  providers: [SalesTransactionsService, BomTableResolverService, ItemTableResolverService]
+  providers: [SalesTransactionsService]
 })
 export class SalesTransactionsModule { }

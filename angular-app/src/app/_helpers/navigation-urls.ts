@@ -15,4 +15,5 @@ export const updateBomMaster = ApiURL + 'updateBomMaster';
 export const insertItemMaster = ApiURL + 'insertItemMaster';
 export const updateItemMaster = ApiURL + 'updateItemMaster';
 export const getInvoiceDetails = ApiURL + 'getInvoiceDetails';
+export const getCompanyDetails = ApiURL + 'getCompanyDetails';
 

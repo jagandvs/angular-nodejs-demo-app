@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+        <div class="col-sm-8 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
             <div class="card card-body shadow rounded"
                 [ngStyle]="errorMessage?{'height': '350px'} : {'height': '300px'}">
                 <div class="header">
@@ -18,13 +18,25 @@
                         </div>
 
                     </div>
-                    <div class="form-row">
+
+                    <div class="row">
+                        <div class="form-group col-sm-8 offset-md-2">
+                            <select class="form-control"
+                                [ngClass]="{'invalid': submitted && f.username.errors, 'valid' : submitted && !f.username.errors && errorMessage==''}">
+
+                                <option *ngFor="let companyMaster of companyMasterDetails"
+                                    [value]="companyMaster.CM_CODE">{{companyMaster.CM_NAME}}</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-sm-8 offset-sm-2">
                             <input class="form-control" type="text" formControlName="username" placeholder="Username"
                                 [ngClass]="{'invalid': submitted && f.username.errors, 'valid' : submitted && !f.username.errors && errorMessage==''}">
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="row">
                         <div class="form-group col-sm-8 offset-sm-2">
                             <input class="form-control" type="password" formControlName="password"
                                 placeholder="Password"

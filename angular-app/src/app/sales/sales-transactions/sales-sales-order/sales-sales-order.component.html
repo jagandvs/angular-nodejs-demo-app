@@ -1,6 +1,7 @@
-<app-nav-sales></app-nav-sales>
-<div class="app-content content container-fluid">
-    <div class="content-wrapper">
+<div class="wrapper">
+    <app-nav></app-nav>
+    <div id="content">
+        <app-nav-sales></app-nav-sales>
         <!-- header section -->
         <div class="content-header row">
             <div class="content-header-left col-md-6 col-xs-12 mb-1">
@@ -41,6 +42,9 @@
                                         class="fas fa-plus"></i></button>
                             </div>
                             <div class="col-md-3">
+                                <button type="button" class="btn btn-success" (click)="exportExcel()" pTooltip="CSV"
+                                    tooltipPosition="bottom"><i class="fas fa-file-excel"></i> Export
+                                    Excel</button>
                             </div>
                             <div class="col-md-3">
                             </div>
@@ -80,7 +84,7 @@
                                 <button class="btn btn-outline-warning mr-1 round"
                                     (click)="editItem(SalesOrderTableResponse)"><i class="far fa-edit"></i></button>
 
-                                
+
                             </td>
                         </tr>
                     </ng-template>
@@ -108,9 +112,9 @@
                             </div>
                             <div class="form-group col-12 col-md-4">
                                 <p-dropdown [optionLabel]="label" [options]="SOTypeList" formControlName="CPOM_TYPE"
-                                    [filter]="true"  [showClear]="true"
-                                    placeholder="Select PO Type" [resetFilterOnHide]="true"
-                                    [virtualScroll]="true" itemSize="10" [autofocus]="true" styleClass="pop-dropdown">
+                                    [filter]="true" [showClear]="true" placeholder="Select PO Type"
+                                    [resetFilterOnHide]="true" [virtualScroll]="true" itemSize="10" [autofocus]="true"
+                                    styleClass="pop-dropdown">
                                 </p-dropdown>
                                 <div *ngIf="submitted && f.CPOM_TYPE.errors" class="alert alert-danger">
                                     <div *ngIf="f.CPOM_TYPE.errors.required">*</div>
@@ -120,8 +124,9 @@
                                 <label for="CPOM_DOC_NO">Order No <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-group col-12 col-md-4">
-                                <input type="text" class="form-control" [disabled]="true" placeholder="Auto Genreated" formControlName="CPOM_DOC_NO">
-                                
+                                <input type="text" class="form-control" [disabled]="true" placeholder="Auto Genreated"
+                                    formControlName="CPOM_DOC_NO">
+
                             </div>
                         </div>
                         <div class="row">
@@ -130,10 +135,10 @@
 
                             </div>
                             <div class="form-group col-12 col-md-4">
-                                <p-dropdown [optionLabel]="label" [options]="CustomerMasterList" formControlName="CPOM_P_CODE"
-                                    [filter]="true"  [showClear]="true"
-                                    placeholder="Select Customer Name" [resetFilterOnHide]="true" 
-                                    [virtualScroll]="true" itemSize="10" styleClass="pop-dropdown">
+                                <p-dropdown [optionLabel]="label" [options]="CustomerMasterList"
+                                    formControlName="CPOM_P_CODE" [filter]="true" [showClear]="true"
+                                    placeholder="Select Customer Name" [resetFilterOnHide]="true" [virtualScroll]="true"
+                                    itemSize="10" styleClass="pop-dropdown">
                                 </p-dropdown>
                             </div>
                             <div class="form-group col-12 col-md-2">
@@ -141,12 +146,12 @@
                             </div>
                             <div class="form-group col-12 col-md-4">
                                 <input type="text" class="form-control" formControlName="CPOM_PONO">
-                                
+
                             </div>
                         </div>
                     </form>
                 </div>
-                
+
                 <div class="container materialForm">
                     <form focusInvalidInput [formGroup]="materialForm">
                         <div class="form-row">

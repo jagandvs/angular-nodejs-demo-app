@@ -1,195 +1,214 @@
-<app-nav-sales></app-nav-sales>
-<div class="app-content content container-fluid">
-    <div class="content-wrapper">
-        <!-- header section -->
-        <div class="content-header row">
-            <div class="content-header-left col-md-6 col-xs-12 mb-1">
-                <h2 class="content-header-title">Item Master</h2>
+<div class="wrapper">
+    <app-nav></app-nav>
+    <div id="content">
+        <app-nav-sales></app-nav-sales>
+        <div class="app-content content container-fluid">
+            <div class="content-wrapper">
+                <!-- header section -->
+                <div class="content-header row">
+                    <div class="content-header-left col-md-6 col-xs-12 mb-1">
+                        <h2 class="content-header-title">Item Master</h2>
+                    </div>
+                    <!-- breadcrum section -->
+                    <div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
+                        <div class="breadcrumb-wrapper col-xs-12">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a routerLink="">Home</a>
+                                </li>
+
+                                <li class="breadcrumb-item active">Sales
+                                </li>
+                                <li class="breadcrumb-item active">Masters
+                                </li>
+                                <li class="breadcrumb-item active">Item Master
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- breadcrumb section ends -->
+                </div>
+                <!-- header section ends -->
+
+                <!-- app body section -->
+                <div class="content-body">
+                    <p-card>
+                        <p-toast position="bottom-center" key="t1"></p-toast>
+                        <p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000" key="c1"></p-confirmDialog>
+                        <!-- primeng table -->
+                        <p-table #dt [value]="itemMasterTableResponse" [rows]="10" [paginator]="true"
+                            [globalFilterFields]="['I_CODENO','I_NAME','I_UOM_NAME','I_CAT_NAME']"
+                            [rowsPerPageOptions]="[10,25,50]" [loading]="loading">
+
+                            <ng-template pTemplate="caption">
+
+                                <div class="row justify-content-between">
+                                    <div class="col-md-3">
+                                        <button class="btn btn-primary" (click)="addNewItem()">Add Item <i
+                                                class="fas fa-plus"></i></button>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-success" (click)="exportExcel()"
+                                            pTooltip="CSV" tooltipPosition="bottom"><i class="fas fa-file-excel"></i>
+                                            Export
+                                            Excel</button>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!-- <button type="button" class="btn btn-danger" (click)="exportExcel()" pTooltip="CSV"
+                                    tooltipPosition="bottom"><i class="fas fa-file-pdf"></i> Export
+                                    PDF</button> -->
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <input pInputText type="text"
+                                                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                placeholder="Search..." />
+                                        </span>
+                                    </div>
+                                </div>
+                            </ng-template>
+
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="I_CODENO">Item Code <p-sortIcon field="I_CODENO">
+                                        </p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="I_NAME">Item Name <p-sortIcon field="I_NAME">
+                                        </p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="I_UOM_NAME">Item Unit <p-sortIcon field="I_UOM_NAME">
+                                        </p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="I_CAT_NAME">Item Category <p-sortIcon field="I_CAT_NAME">
+                                        </p-sortIcon>
+                                    </th>
+
+
+                                    <th>Action</th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-itemMasterTableResponse let-ri="rowIndex">
+                                <tr>
+                                    <td>{{itemMasterTableResponse.I_CODENO}}</td>
+                                    <td>{{itemMasterTableResponse.I_NAME}}</td>
+                                    <td>{{itemMasterTableResponse.I_UOM_NAME}}</td>
+                                    <td>{{itemMasterTableResponse.I_CAT_NAME}}</td>
+
+                                    <td>
+                                        <button class="btn btn-outline-danger mr-1 round"
+                                            (click)="deleteTableRow(itemMasterTableResponse.I_CODE,ri)"><i
+                                                class="fas fa-trash"></i></button>
+                                        <button class="btn btn-outline-warning mr-1 round"
+                                            (click)="editItem(itemMasterTableResponse)"><i
+                                                class="far fa-edit"></i></button>
+                                        <!-- <button class="btn btn-outline-info mr-1 round"><i class="far fa-eye"></i></button> -->
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="5" style="text-align: center;">
+                                        <h4>No Items found.</h4>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-card>
+                </div>
+                <p-dialog [contentStyle]="{'overflow':'visible'}" header="Item new Master" [(visible)]="displayBasic"
+                    [style]="{width: '80vw'}" [baseZIndex]="10000" [closable]="false">
+                    <p-toast key="t2"></p-toast>
+                    <p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000"></p-confirmDialog>
+                    <ng-template pTemplate="content">
+                        <div class="container itemForm">
+                            <form focusInvalidInput [formGroup]="itemForm">
+                                <div class="row">
+                                    <div class="form-group col-12 col-md-2">
+                                        <label>Item Category<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="form-group col-12 col-md-4">
+                                        <p-dropdown [optionLabel]="label" [options]="item_cat_list"
+                                            formControlName="I_CAT_NAME" [filter]="true"
+                                            (onChange)="onItemSelected($event)" [showClear]="true"
+                                            placeholder="Select Category" [resetFilterOnHide]="true"
+                                            [virtualScroll]="true" itemSize="10" [autofocus]="true"
+                                            styleClass="pop-dropdown">
+                                        </p-dropdown>
+                                        <div *ngIf="submitted && f.I_CAT_NAME.errors" class="alert alert-danger">
+                                            <div *ngIf="f.I_CAT_NAME.errors.required">Item Category is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12 col-md-2">
+                                        <label>Sub Category <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="form-group col-12 col-md-4">
+                                        <p-dropdown [optionLabel]="label" [options]="sel_item_cat_list"
+                                            formControlName="I_SCAT_NAME" [filter]="true" [showClear]="true"
+                                            placeholder="Select Sub Category" [resetFilterOnHide]="true"
+                                            [virtualScroll]="true" itemSize="10" styleClass="pop-dropdown">
+                                        </p-dropdown>
+                                        <div *ngIf="submitted && f.I_SCAT_NAME.errors" class="alert alert-danger">
+                                            <div *ngIf="f.I_SCAT_NAME.errors.required">Sub Category is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-12 col-md-2">
+                                        <label>Item Code<span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="form-group col-12 col-md-4">
+                                        <input type="text" class="form-control" formControlName="I_CODENO">
+                                        <div *ngIf="submitted && f.I_CODENO.errors" class="alert alert-danger">
+                                            <div *ngIf="f.I_CODENO.errors.required">Item Code is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12 col-md-2">
+                                        <label for="P_I_NAME">Item Name <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="form-group col-12 col-md-4">
+                                        <input type="text" class="form-control" formControlName="I_NAME">
+                                        <div *ngIf="submitted && f.I_NAME.errors" class="alert alert-danger">
+                                            <div *ngIf="f.I_NAME.errors.required">Item Name is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-12 col-md-2">
+                                        <label>Tally Name</label>
+                                    </div>
+                                    <div class="form-group col-12 col-md-4">
+                                        <input type="text" class="form-control" formControlName="I_DRAW_NO">
+
+                                    </div>
+                                    <div class="form-group col-12 col-md-2">
+                                        <label for="P_I_NAME">Specifications </label>
+                                    </div>
+                                    <div class="form-group col-12 col-md-4">
+                                        <input type="text" class="form-control" formControlName="I_SPECIFICATION">
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <div class="row">
+                            <button class="btn btn-outline-primary" (click)="save();"><i class="fas fa-save"></i>
+                                Save</button>
+                            <button class="btn btn-outline-secondary" (click)="resetItemForm();"><i
+                                    class="fas fa-undo"></i>
+                                Reset</button>
+                            <button class="btn btn-outline-danger" (click)="displayBasic=false;resetItemForm();"><i
+                                    class="fas fa-times"></i>
+                                Cancel</button>
+                        </div>
+                    </ng-template>
+                </p-dialog>
+
             </div>
-            <!-- breadcrum section -->
-            <div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12">
-                <div class="breadcrumb-wrapper col-xs-12">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a routerLink="">Home</a>
-                        </li>
-
-                        <li class="breadcrumb-item active">Sales
-                        </li>
-                        <li class="breadcrumb-item active">Masters
-                        </li>
-                        <li class="breadcrumb-item active">Item Master
-                        </li>
-                    </ol>
-                </div>
-            </div>
-            <!-- breadcrumb section ends -->
         </div>
-        <!-- header section ends -->
-
-        <!-- app body section -->
-        <div class="content-body">
-            <p-card>
-                <p-toast position="bottom-center" key="t1"></p-toast>
-                <p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000" key="c1"></p-confirmDialog>
-                <!-- primeng table -->
-                <p-table #dt [value]="itemMasterTableResponse" [rows]="10" [paginator]="true"
-                    [globalFilterFields]="['I_CODENO','I_NAME','I_UOM_NAME','I_CAT_NAME']"
-                    [rowsPerPageOptions]="[10,25,50]" [loading]="loading">
-
-                    <ng-template pTemplate="caption">
-                        <div class="row justify-content-between">
-                            <div class="col-md-3">
-                                <button class="btn btn-primary" (click)="addNewItem()">Add Item <i
-                                        class="fas fa-plus"></i></button>
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                                <span class="p-input-icon-left">
-                                    <i class="pi pi-search"></i>
-                                    <input pInputText type="text"
-                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                        placeholder="Search..." />
-                                </span>
-                            </div>
-                        </div>
-                    </ng-template>
-
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="I_CODENO">Item Code <p-sortIcon field="I_CODENO">
-                                </p-sortIcon>
-                            </th>
-                            <th pSortableColumn="I_NAME">Item Name <p-sortIcon field="I_NAME">
-                                </p-sortIcon>
-                            </th>
-                            <th pSortableColumn="I_UOM_NAME">Item Unit <p-sortIcon field="I_UOM_NAME">
-                                </p-sortIcon>
-                            </th>
-                            <th pSortableColumn="I_CAT_NAME">Item Category <p-sortIcon field="I_CAT_NAME">
-                                </p-sortIcon>
-                            </th>
-
-
-                            <th>Action</th>
-                        </tr>
-                    </ng-template>
-
-                    <ng-template pTemplate="body" let-itemMasterTableResponse let-ri="rowIndex">
-                        <tr>
-                            <td>{{itemMasterTableResponse.I_CODENO}}</td>
-                            <td>{{itemMasterTableResponse.I_NAME}}</td>
-                            <td>{{itemMasterTableResponse.I_UOM_NAME}}</td>
-                            <td>{{itemMasterTableResponse.I_CAT_NAME}}</td>
-
-                            <td>
-                                <button class="btn btn-outline-danger mr-1 round"
-                                    (click)="deleteTableRow(itemMasterTableResponse.I_CODE,ri)"><i
-                                        class="fas fa-trash"></i></button>
-                                <button class="btn btn-outline-warning mr-1 round"
-                                    (click)="editItem(itemMasterTableResponse)"><i class="far fa-edit"></i></button>
-                                <!-- <button class="btn btn-outline-info mr-1 round"><i class="far fa-eye"></i></button> -->
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="emptymessage">
-                        <tr>
-                            <td colspan="5" style="text-align: center;">
-                                <h4>No Items found.</h4>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </p-card>
-        </div>
-        <p-dialog [contentStyle]="{'overflow':'visible'}" header="Item new Master" [(visible)]="displayBasic"
-            [style]="{width: '80vw'}" [baseZIndex]="10000" [closable]="false">
-            <p-toast key="t2"></p-toast>
-            <p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000"></p-confirmDialog>
-            <ng-template pTemplate="content">
-                <div class="container itemForm">
-                    <form focusInvalidInput [formGroup]="itemForm">
-                        <div class="row">
-                            <div class="form-group col-12 col-md-2">
-                                <label>Item Category<span class="text-danger">*</span></label>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <p-dropdown [optionLabel]="label" [options]="item_cat_list" formControlName="I_CAT_NAME"
-                                    [filter]="true" (onChange)="onItemSelected($event)" [showClear]="true"
-                                    placeholder="Select Category" [resetFilterOnHide]="true" [virtualScroll]="true"
-                                    itemSize="10" [autofocus]="true" styleClass="pop-dropdown">
-                                </p-dropdown>
-                                <div *ngIf="submitted && f.I_CAT_NAME.errors" class="alert alert-danger">
-                                    <div *ngIf="f.I_CAT_NAME.errors.required">Item Category is required</div>
-                                </div>
-                            </div>
-                            <div class="form-group col-12 col-md-2">
-                                <label>Sub Category <span class="text-danger">*</span></label>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <p-dropdown [optionLabel]="label" [options]="sel_item_cat_list"
-                                    formControlName="I_SCAT_NAME" [filter]="true" [showClear]="true"
-                                    placeholder="Select Sub Category" [resetFilterOnHide]="true" [virtualScroll]="true"
-                                    itemSize="10" styleClass="pop-dropdown">
-                                </p-dropdown>
-                                <div *ngIf="submitted && f.I_SCAT_NAME.errors" class="alert alert-danger">
-                                    <div *ngIf="f.I_SCAT_NAME.errors.required">Sub Category is required</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-12 col-md-2">
-                                <label>Item Code<span class="text-danger">*</span></label>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <input type="text" class="form-control" formControlName="I_CODENO">
-                                <div *ngIf="submitted && f.I_CODENO.errors" class="alert alert-danger">
-                                    <div *ngIf="f.I_CODENO.errors.required">Item Code is required</div>
-                                </div>
-                            </div>
-                            <div class="form-group col-12 col-md-2">
-                                <label for="P_I_NAME">Item Name <span class="text-danger">*</span></label>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <input type="text" class="form-control" formControlName="I_NAME">
-                                <div *ngIf="submitted && f.I_NAME.errors" class="alert alert-danger">
-                                    <div *ngIf="f.I_NAME.errors.required">Item Name is required</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-12 col-md-2">
-                                <label>Tally Name</label>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <input type="text" class="form-control" formControlName="I_DRAW_NO">
-                                
-                            </div>
-                            <div class="form-group col-12 col-md-2">
-                                <label for="P_I_NAME">Specifications </label>
-                            </div>
-                            <div class="form-group col-12 col-md-4">
-                                <input type="text" class="form-control" formControlName="I_SPECIFICATION">
-                                
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="footer">
-                <div class="row">
-                    <button class="btn btn-outline-primary" (click)="save();"><i class="fas fa-save"></i> Save</button>
-                    <button class="btn btn-outline-secondary" (click)="resetItemForm();"><i class="fas fa-undo"></i>
-                        Reset</button>
-                    <button class="btn btn-outline-danger" (click)="displayBasic=false;resetItemForm();"><i
-                            class="fas fa-times"></i>
-                        Cancel</button>
-                </div>
-            </ng-template>
-        </p-dialog>
-
     </div>
 </div>

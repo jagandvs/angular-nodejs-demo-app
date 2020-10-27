@@ -28,11 +28,14 @@
        position: relative;
        top : 20%;
    }
-   input{
+   input,select{
        border-radius: 20px;
        text-align: center;
    }
-   input:focus{
+   select:hover{
+    cursor: pointer;
+   }
+   input:focus,select:focus{
      box-shadow: 5px 10px 18px #056bf1;
    }
    .invalid{

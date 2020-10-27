@@ -1,0 +1,43 @@
+.container-map {
+  position: relative;
+}
+.box1 {
+  position: absolute;
+  color: #fff;
+  padding-top: 60px;
+  padding-left: 50px;
+  font-size: 50px;
+  font-weight: bold;
+  height: 800px;
+  width: 100%;
+}
+.box2 {
+  position: absolute;
+  left: 3%;
+  top: 80px;
+  width: 200px;
+}
+.box3 {
+  position: absolute;
+  right: 5%;
+  top: 80px;
+  width: 200px;
+}
+.card-header {
+  padding: 2px;
+  cursor: pointer;
+  border: none;
+}
+.card:first-of-type {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.card:last-of-type {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.card-inner-text {
+  margin: 10px;
+  text-align: center;
+  font-size: 18px;
+}
