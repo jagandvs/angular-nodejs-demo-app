@@ -1,76 +1,81 @@
 <!-- Sidebar  -->
 <nav id="sidebar">
-    <div class="sidebar-header">
-        <h3>Company Logo</h3>
-        <strong>CL</strong>
-    </div>
+  <div class="sidebar-header">
+    <h3>ERP</h3>
+    <strong>ERP</strong>
+  </div>
 
-    <ul class="list-unstyled components">
+  <ul class="list-unstyled components">
+    <li>
+      <a (click)="router.navigate(['dashboard'])">
+        <i class="fas fa-home"></i>
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a (click)="router.navigate(['store'])">
+        <i class="fas fa-store"></i>
+        Store
+      </a>
+    </li>
+    <li>
+      <a (click)="router.navigate(['sales'])">
+        <i class="fas fa-comments-dollar"></i>
+        Sale
+      </a>
+    </li>
+    <li>
+      <a
+        href="#masterSubmenu"
+        data-toggle="collapse"
+        aria-expanded="false"
+        class="dropdown-toggle"
+      >
+        <i class="fas fa-code-branch"></i>
+        Masters
+      </a>
+      <ul class="collapse list-unstyled" id="masterSubmenu">
         <li>
-            <a (click)="router.navigate(['dashboard'])">
-                <i class="fas fa-home"></i>
-                Dashboard
-            </a>
+          <a href="#">Item Master</a>
         </li>
         <li>
-            <a (click)="router.navigate(['store'])">
-                <i class="fas fa-store"></i>
-                Store
-            </a>
+          <a href="#">Item Unit Master</a>
         </li>
         <li>
-            <a (click)="router.navigate(['sales'])">
-                <i class="fas fa-comments-dollar"></i>
-                Sale
-            </a>
+          <a href="#">Item Category Master</a>
         </li>
         <li>
-            <a href="#masterSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                <i class="fas fa-code-branch"></i>
-                Masters
-            </a>
-            <ul class="collapse list-unstyled" id="masterSubmenu">
-                <li>
-                    <a href="#">Item Master</a>
-                </li>
-                <li>
-                    <a href="#">Item Unit Master</a>
-                </li>
-                <li>
-                    <a href="#">Item Category Master</a>
-                </li>
-                <li>
-                    <a href="#">Item Sub-Category Master</a>
-                </li>
-                <li>
-                    <a href="#">HSN Master</a>
-                </li>
-                <li>
-                    <a href="#">Tally Master</a>
-                </li>
-                <li>
-                    <a href="#">BOM Master</a>
-                </li>
-            </ul>
+          <a href="#">Item Sub-Category Master</a>
         </li>
+        <li>
+          <a href="#">HSN Master</a>
+        </li>
+        <li>
+          <a href="#">Tally Master</a>
+        </li>
+        <li>
+          <a href="#">BOM Master</a>
+        </li>
+      </ul>
+    </li>
 
-        <li>
-            <a href="#">
-                <i class="fas fa-comments-dollar"></i>
-                Purchase
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-file-invoice-dollar"></i>
-                GST
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-sliders-h"></i>
-                Utility
-            </a>
-        </li>
-    </ul>
+    <li>
+      <a href="#">
+        <i class="fas fa-comments-dollar"></i>
+        Purchase
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <i class="fas fa-file-invoice-dollar"></i>
+        GST
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <i class="fas fa-sliders-h"></i>
+        Utility
+      </a>
+    </li>
+  </ul>
 </nav>

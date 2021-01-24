@@ -1,0 +1,161 @@
+<div class="wrapper">
+  <app-nav></app-nav>
+  <div id="content">
+    <app-nav-administrator></app-nav-administrator>
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <!-- header section -->
+        <div class="content-header row">
+          <div class="content-header-left col-md-6 col-xs-12 mb-1">
+            <h2 class="content-header-title">User Rights</h2>
+          </div>
+          <!-- breadcrum section -->
+          <div
+            class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12"
+          >
+            <div class="breadcrumb-wrapper col-xs-12">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="">Home</a></li>
+
+                <li class="breadcrumb-item">
+                  <a routerLink="/administrator">Administrator</a>
+                </li>
+                <li class="breadcrumb-item active">User Rights</li>
+              </ol>
+            </div>
+          </div>
+          <!-- breadcrumb section ends -->
+        </div>
+        <!-- header section ends -->
+
+        <!-- app body section -->
+        <div class="content-body">
+          <div class="card card-body shadow">
+            <div class="row justify-content-center">
+              <div class="form-group col-12 col-md-6">
+                <label for="username">User Name</label
+                ><span class="text-danger">*</span>
+                <select class="form-control" id="username">
+                  <option></option>
+                </select>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="form-group col-12 col-md-6">
+                <label for="fromusername">From User Name</label
+                ><span class="text-danger">*</span>
+                <select class="form-control" id="fromusernname">
+                  <option></option>
+                </select>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="form-group col-12 col-md-6">
+                <label for="fromname">Form Name</label
+                ><span class="text-danger">*</span>
+                <select class="form-control" id="fromname">
+                  <option></option>
+                </select>
+              </div>
+            </div>
+            <hr />
+            <div class="row justify-content-around">
+              <div
+                class="custom-control col-6 col-md-2 custom-checkbox custom-control-inline"
+              >
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="menu"
+                  name="menu"
+                />
+                <label class="custom-control-label" for="menu">Menu</label>
+              </div>
+              <div
+                class="custom-control col-6 col-md-2 custom-checkbox custom-control-inline"
+              >
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="add"
+                  name="add"
+                />
+                <label class="custom-control-label" for="add">Add</label>
+              </div>
+              <div
+                class="custom-control col-6 col-md-2 custom-checkbox custom-control-inline"
+              >
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="view"
+                  name="view"
+                />
+                <label class="custom-control-label" for="view">View</label>
+              </div>
+              <div
+                class="custom-control col-6 col-md-2 custom-checkbox custom-control-inline"
+              >
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="update"
+                  name="update"
+                />
+                <label class="custom-control-label" for="update">Update</label>
+              </div>
+            </div>
+            <div class="row justify-content-around">
+              <div
+                class="custom-control col-6 col-md-2 custom-checkbox custom-control-inline"
+              >
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="delete"
+                  name="delete"
+                />
+                <label class="custom-control-label" for="delete">Delete</label>
+              </div>
+              <div
+                class="custom-control col-6 col-md-2 custom-checkbox custom-control-inline"
+              >
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="print"
+                  value="print"
+                />
+                <label class="custom-control-label" for="print">Print</label>
+              </div>
+              <div
+                class="custom-control col-6 col-md-2 custom-checkbox custom-control-inline"
+              >
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="backdate"
+                  name="backdate"
+                />
+                <label class="custom-control-label" for="backdate"
+                  >BackDate</label
+                >
+              </div>
+              <div
+                class="custom-control col-6 col-md-2 custom-checkbox custom-control-inline"
+              >
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="all"
+                  name="all"
+                />
+                <label class="custom-control-label" for="all">All</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

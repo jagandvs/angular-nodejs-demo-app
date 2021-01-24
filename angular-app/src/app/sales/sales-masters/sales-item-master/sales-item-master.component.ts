@@ -7,25 +7,27 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { ConfirmationService, MessageService, SelectItem } from "primeng/api";
-import { ITEM_MASTER } from "src/app/model/ITEM_MASTER";
+import { itemMasterTableResponse } from "../../model/itemMasterTableResponse";
 import { CommonServicesService } from "src/app/_services/common-services.service";
 import { SalesMastersService } from "../sales-masters.service";
+import { itemMasterTableRequest } from "../../model/itemMasterTableRequest";
+
 @Component({
   selector: "app-sales-item-master",
   templateUrl: "./sales-item-master.component.html",
   styleUrls: ["./sales-item-master.component.css"],
 })
 export class SalesItemMasterComponent implements OnInit {
-  itemMasterTableResponse: ITEM_MASTER[];
-  displayBasic: boolean;
-  submitted: boolean;
-  newItem: boolean;
-  loading: boolean;
-  I_CODE: number;
-  itemForm: FormGroup;
-  item_cat_list: SelectItem[] = [];
-  sel_item_cat_list: SelectItem[] = [];
-  item_subcat_list = [];
+  public itemMasterTableResponse: itemMasterTableResponse[];
+  public displayBasic: boolean = false;
+  public submitted: boolean = false;
+  public newItem: boolean = false;
+  public loading: boolean = false;
+  public I_CODE: number;
+  public itemForm: FormGroup;
+  public item_cat_list: SelectItem[] = [];
+  public sel_item_cat_list: SelectItem[] = [];
+  public item_subcat_list = [];
 
   itemMasterFieldNames: string =
     "I_CODE,I_CODENO,I_NAME,I_UOM_NAME,I_CAT_NAME,ITEM_MASTER.I_CAT_CODE,I_SCAT_CODE";
@@ -161,11 +163,11 @@ export class SalesItemMasterComponent implements OnInit {
       },
     });
   }
-  editItem(itemMasterTableResponse: ITEM_MASTER) {
+  editItem(itemMasterTableResponse: itemMasterTableResponse) {
     this.displayBasic = true;
     this.I_CODE = itemMasterTableResponse.I_CODE;
     this.f["I_SCAT_NAME"].enable();
-    this.f["I_SCAT_NAME"].setValue(itemMasterTableResponse.I_SUBCAT_CODE);
+
     this.f["I_CAT_NAME"].setValue(itemMasterTableResponse.I_CAT_CODE);
     this.item_subcat_list.filter((item) => {
       if (item.SCAT_CAT_CODE === itemMasterTableResponse.I_CAT_CODE) {
@@ -175,7 +177,8 @@ export class SalesItemMasterComponent implements OnInit {
         });
       }
     });
-    if (this.sel_item_cat_list.length > 0) {
+    this.f["I_SCAT_NAME"].setValue(itemMasterTableResponse.I_SUBCAT_CODE);
+    if (this.sel_item_cat_list.length) {
       this.f["I_SCAT_NAME"].setValidators([Validators.required]);
     } else {
       this.f["I_SCAT_NAME"].disable();
@@ -185,21 +188,14 @@ export class SalesItemMasterComponent implements OnInit {
     this.f["I_NAME"].setValue(itemMasterTableResponse.I_NAME);
   }
   save() {
-    console.log(
-      this.f["I_CODENO"].value,
-      this.f["I_NAME"].value,
-      this.f["I_SCAT_NAME"].value,
-      this.f["I_CAT_NAME"].value
-    );
     this.submitted = true;
     if (this.itemForm.invalid) {
-      this.messageService.add({
+      return this.messageService.add({
         key: "t2",
         severity: "error",
         summary: "Error",
         detail: "Please Fill all required fields",
       });
-      return;
     }
     if (this.newItem == true) {
       this.confirmationService.confirm({
@@ -208,14 +204,7 @@ export class SalesItemMasterComponent implements OnInit {
         icon: "fas fa-save",
         accept: () => {
           this.service
-            .insertItemMaster(
-              this.f["I_CODENO"].value,
-              this.f["I_NAME"].value,
-              this.f["I_SCAT_NAME"].value,
-              this.f["I_CAT_NAME"].value,
-              this.f["I_DRAW_NO"].value,
-              this.f["I_SPECIFICATION"].value
-            )
+            .insertItemMaster(this.itemForm.value as itemMasterTableRequest)
             .subscribe((res) => {
               this.itemMasterTableResponse = [];
 
@@ -246,10 +235,7 @@ export class SalesItemMasterComponent implements OnInit {
         accept: () => {
           this.service
             .updateItemMaster(
-              this.f["I_CODENO"].value,
-              this.f["I_NAME"].value,
-              this.f["I_SCAT_NAME"].value,
-              this.f["I_CAT_NAME"].value,
+              this.itemForm.value as itemMasterTableRequest,
               this.I_CODE
             )
             .subscribe((res) => {

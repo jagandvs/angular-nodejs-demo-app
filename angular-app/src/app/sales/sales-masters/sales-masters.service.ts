@@ -1,28 +1,42 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ITEM_MASTER } from 'src/app/model/ITEM_MASTER';
-import { deleteTable, httpOptions, insertItemMaster, TableResponse, updateItemMaster } from 'src/app/_helpers/navigation-urls';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { ITEM_MASTER } from "src/app/model/ITEM_MASTER";
+import {
+  deleteTable,
+  httpOptions,
+  insertItemMaster,
+  TableResponse,
+  updateItemMaster,
+} from "src/app/_helpers/navigation-urls";
+import { itemMasterTableRequest } from "../model/itemMasterTableRequest";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class SalesMastersService {
-
-  constructor(
-    private http: HttpClient,
-
-  ) { }
-  insertItemMaster(I_CODENO: string, I_NAME: string, I_SCAT_NAME: number, I_CAT_NAME: number, I_DRAW_NO: string, I_SPECIFICATION: string): Observable<any> {
-    let body = { I_CODENO: I_CODENO, I_NAME: I_NAME, I_SCAT_NAME: I_SCAT_NAME, I_CAT_NAME: I_CAT_NAME, I_DRAW_NO: I_DRAW_NO, I_SPECIFICATION: I_SPECIFICATION }
-    return this.http.post<any>(insertItemMaster, body, httpOptions)
+  constructor(private http: HttpClient) {}
+  insertItemMaster(
+    itemMasterTableRequest: itemMasterTableRequest
+  ): Observable<any> {
+    return this.http.post<any>(
+      insertItemMaster,
+      itemMasterTableRequest,
+      httpOptions
+    );
   }
-  updateItemMaster(I_CODENO: string, I_NAME: string, I_SCAT_NAME: number, I_CAT_NAME: number, I_CODE: number): Observable<any> {
-    let body = { I_CODENO: I_CODENO, I_NAME: I_NAME, I_SCAT_NAME: I_SCAT_NAME, I_CAT_NAME: I_CAT_NAME, I_CODE: I_CODE }
-    return this.http.put<any>(updateItemMaster, body, httpOptions)
+  updateItemMaster(
+    itemMasterTableRequest: itemMasterTableRequest,
+    I_CODE: number
+  ): Observable<any> {
+    return this.http.put<any>(
+      `${updateItemMaster}/${I_CODE}`,
+      itemMasterTableRequest,
+      httpOptions
+    );
   }
   deleteTable(tableName: string, condition: string): Observable<any> {
-    let body = { tableName: tableName, condition: condition }
-    return this.http.put(deleteTable, body, httpOptions)
+    let body = { tableName: tableName, condition: condition };
+    return this.http.put(deleteTable, body, httpOptions);
   }
 }
