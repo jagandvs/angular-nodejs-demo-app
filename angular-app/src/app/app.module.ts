@@ -18,6 +18,7 @@ import { GstComponent } from "./gst/gst.component";
 import { MastersComponent } from "./masters/masters.component";
 import { AdministratorComponent } from "./administrator/administrator.component";
 import { JwtInterceptor } from "./_helpers/JwtInterceptor";
+import { ErrorInterceptor } from "./_helpers/error.interceptor";
 import { BnNgIdleService } from "bn-ng-idle";
 @NgModule({
   declarations: [

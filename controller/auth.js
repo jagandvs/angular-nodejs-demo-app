@@ -10,6 +10,12 @@ exports.signin = async (req, res) => {
       .request()
       .input("UM_USERNAME", sql.VarChar, req.body.username)
       .execute("getUserDetails");
+    console.log(result.recordset[0]);
+    if (result.recordset[0] == undefined) {
+      return res.status(401).json({
+        error: "User not found",
+      });
+    }
     const matcher_True = comparePWD(
       req.body.password,
       result.recordset[0].UM_PASSWORD

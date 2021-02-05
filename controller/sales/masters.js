@@ -39,3 +39,24 @@ exports.updateItemMaster = async (req, res) => {
     res.send(error.message);
   }
 };
+
+exports.UPSERT_ITEM_UNIT_MASTER = async (req, res) => {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .input("PROCESS", sql.VarChar, req.body.PROCESS)
+      .input("I_UOM_CODE", sql.Int, req.body.I_UOM_CODE)
+      .input("I_UOM_CM_COMP_ID", sql.Int, req.body.I_UOM_CM_COMP_ID)
+      .input("I_UOM_NAME", sql.VarChar, req.body.I_UOM_NAME)
+      .input("I_UOM_DESC", sql.VarChar, req.body.I_UOM_DESC)
+      .output("PK_CODE", sql.Numeric)
+      .output("ERROR", sql.VarChar)
+      .execute("UPSERT_ITEM_UNIT_MASTER");
+
+    res.json(result);
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};

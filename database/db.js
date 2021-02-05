@@ -1,16 +1,17 @@
 const sql = require("mssql");
 
 const config = {
-  user: "sa",
-  password: "Dj@004112",
-  server: "localhost",
-  port: 1433,
-  database: "ERP-DATA",
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  server: process.env.SERVER,
+  port: parseInt(process.env.DB_PORT),
+  database: process.env.DATABASE,
   options: {
     encrypt: true,
     enableArithAbort: true,
   },
 };
+
 const poolPromise = new sql.ConnectionPool(config)
   .connect()
   .then((pool) => {

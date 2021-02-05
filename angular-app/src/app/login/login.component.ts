@@ -5,6 +5,7 @@ import { AuthenticationService } from "../_services/authentication.service";
 import { USER_MASTER } from "../model/USER_MASTER";
 import { CommonServicesService } from "../_services/common-services.service";
 import { COMPANY_MASTER } from "../model/COMPANY_MASTER";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: "app-login",
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit {
 
     // Get the company details
     this.commonService
-      .getTableResponse("*", "COMPANY_MASTER", "CM_ACTIVE_IND=1")
+      .getCompanyDetails("*", "COMPANY_MASTER", "CM_ACTIVE_IND=1")
       .subscribe((data) => {
         this.companyMasterDetails = data;
         this.companyNames = [
@@ -65,7 +66,8 @@ export class LoginComponent implements OnInit {
       password: ["", Validators.required],
     });
 
-    this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
+    this.returnUrl =
+      this.route.snapshot.queryParams["returnUrl"] || "/dashboard";
   }
 
   // Get Control Over the form
@@ -95,7 +97,8 @@ export class LoginComponent implements OnInit {
             this.errorMessage = "Invalid username/password";
           }
         },
-        (error) => {
+        (error: HttpErrorResponse) => {
+          console.log(error);
           this.errorMessage = error.error.error;
           this.loading = false;
         }

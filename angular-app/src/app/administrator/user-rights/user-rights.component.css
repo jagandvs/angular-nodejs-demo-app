@@ -1,0 +1,12 @@
+:host ::ng-deep .pop-dropdown .p-dropdown-items-wrapper,
+:host ::ng-deep .pop-dropdown {
+  width: 20rem;
+}
+:host ::ng-deep .p-dropdown.ng-dirty.ng-invalid {
+  border-color: unset !important;
+}
+
+:host ::ng-deep .ngx-pagination {
+  text-align: center;
+  justify-content: center;
+}

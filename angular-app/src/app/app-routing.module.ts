@@ -7,7 +7,7 @@ import { NavComponent } from "./nav/nav.component";
 import { LogoutComponent } from "./logout/logout.component";
 
 const routes: Routes = [
-  { path: "", component: HomeComponent, canActivate: [AuthGuard] },
+  { path: "", component: LoginComponent },
   { path: "dashboard", component: HomeComponent, canActivate: [AuthGuard] },
   { path: "login", component: LoginComponent },
   { path: "logout", component: LogoutComponent, canActivate: [AuthGuard] },
@@ -37,6 +37,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  { path: "**", redirectTo: "login" },
 ];
 
 @NgModule({
