@@ -4,7 +4,7 @@ const config = {
   user: process.env.USER,
   password: process.env.PASSWORD,
   server: process.env.SERVER,
-  port: parseInt(process.env.DB_PORT),
+  port: parseInt(process.env.DBPORT),
   database: process.env.DATABASE,
   options: {
     encrypt: true,

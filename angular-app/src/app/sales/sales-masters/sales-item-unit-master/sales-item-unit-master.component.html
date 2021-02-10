@@ -1,7 +1,213 @@
 <div class="wrapper">
-    <app-nav></app-nav>
-    <div id="content">
-        <app-nav-sales></app-nav-sales>
-        Hello Unit Component
+  <app-nav></app-nav>
+  <div id="content">
+    <app-nav-sales></app-nav-sales>
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <!-- header section -->
+        <div class="content-header row">
+          <div class="content-header-left col-md-6 col-xs-12 mb-1">
+            <h2 class="content-header-title">Item Master</h2>
+          </div>
+          <!-- breadcrum section -->
+          <div
+            class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12"
+          >
+            <div class="breadcrumb-wrapper col-xs-12">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="">Home</a></li>
+
+                <li class="breadcrumb-item active">Sales</li>
+                <li class="breadcrumb-item active">Masters</li>
+                <li class="breadcrumb-item active">Item Master</li>
+              </ol>
+            </div>
+          </div>
+          <!-- breadcrumb section ends -->
+        </div>
+        <!-- header section ends -->
+        <div class="content-body">
+          <p-card>
+            <p-toast position="bottom-center" key="t1"></p-toast>
+            <p-confirmDialog
+              [style]="{width: '30vw'}"
+              [baseZIndex]="10000"
+              key="c1"
+            ></p-confirmDialog>
+            <p-table
+              #dt
+              [value]="itemUnitMasterTableResponse"
+              [rows]="10"
+              [paginator]="true"
+              [globalFilterFields]="['I_UOM_NAME','I_UOM_DESC']"
+              [rowsPerPageOptions]="[10,25,50]"
+              [loading]="loading"
+            >
+              <ng-template pTemplate="caption">
+                <div class="row justify-content-between">
+                  <div class="col-md-3">
+                    <button class="btn btn-primary" (click)="addNewItem()">
+                      Add Item <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      (click)="exportExcel()"
+                      pTooltip="CSV"
+                      tooltipPosition="bottom"
+                    >
+                      <i class="fas fa-file-excel"></i> Export Excel
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <!-- <button type="button" class="btn btn-danger" (click)="exportExcel()" pTooltip="CSV"
+                                    tooltipPosition="bottom"><i class="fas fa-file-pdf"></i> Export
+                                    PDF</button> -->
+                  </div>
+                  <div class="col-md-3">
+                    <span class="p-input-icon-left">
+                      <i class="pi pi-search"></i>
+                      <input
+                        pInputText
+                        type="text"
+                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..."
+                      />
+                    </span>
+                  </div>
+                </div>
+              </ng-template>
+
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="I_UOM_NAME">
+                    Unit Short Name
+                    <p-sortIcon field="I_UOM_NAME"> </p-sortIcon>
+                  </th>
+                  <th pSortableColumn="I_UOM_DESC">
+                    Unit Description
+                    <p-sortIcon field="I_UOM_DESC"> </p-sortIcon>
+                  </th>
+
+                  <th>Action</th>
+                </tr>
+              </ng-template>
+
+              <ng-template
+                pTemplate="body"
+                let-itemUnitMasterTableResponse
+                let-ri="rowIndex"
+              >
+                <tr>
+                  <td>{{itemUnitMasterTableResponse.I_UOM_NAME}}</td>
+                  <td>{{itemUnitMasterTableResponse.I_UOM_DESC}}</td>
+                  <td>
+                    <button
+                      class="btn btn-outline-danger mr-1 round"
+                      (click)="deleteTableRow(itemUnitMasterTableResponse.I_UOM_CODE,ri)"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                    <button
+                      class="btn btn-outline-warning mr-1 round"
+                      (click)="editItem(itemUnitMasterTableResponse)"
+                    >
+                      <i class="far fa-edit"></i>
+                    </button>
+                    <!-- <button class="btn btn-outline-info mr-1 round"><i class="far fa-eye"></i></button> -->
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="5" style="text-align: center;">
+                    <h4>No Items found.</h4>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </p-card>
+        </div>
+        <p-dialog
+          [contentStyle]="{'overflow':'visible'}"
+          header="Item Unit Master"
+          [(visible)]="displayBasic"
+          [style]="{width: '80vw'}"
+          [baseZIndex]="10000"
+          [closable]="false"
+        >
+          <p-toast key="t2"></p-toast>
+          <p-confirmDialog
+            [style]="{width: '30vw'}"
+            [baseZIndex]="10000"
+          ></p-confirmDialog>
+          <ng-template pTemplate="content">
+            <div class="container itemForm">
+              <form focusInvalidInput [formGroup]="itemUnitMasterForm">
+                <div class="form-row justify-content-center">
+                  <div class="form-group col-12 col-md-6">
+                    <label for="unitShortName"
+                      >Unit Short Name <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      formControlName="I_UOM_NAME"
+                      class="form-control"
+                    />
+                    <div
+                      *ngIf="submitted && f.I_UOM_NAME.errors"
+                      class="alert alert-danger"
+                    >
+                      <div *ngIf="f.I_UOM_NAME.errors.required">
+                        Unit Short Name is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row justify-content-center">
+                  <div class="form-group col-12 col-md-6">
+                    <label for="unitShortName"
+                      >Unit Description
+                      <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="text"
+                      formControlName="I_UOM_DESC"
+                      class="form-control"
+                    />
+                    <div
+                      *ngIf="submitted && f.I_UOM_DESC.errors"
+                      class="alert alert-danger"
+                    >
+                      <div *ngIf="f.I_UOM_DESC.errors.required">
+                        Unit Description is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <div class="row">
+              <button class="btn btn-outline-primary" (click)="saveItem();">
+                <i class="fas fa-save"></i> Save
+              </button>
+              <button
+                class="btn btn-outline-secondary"
+                (click)="resetItemForm();"
+              >
+                <i class="fas fa-undo"></i> Reset
+              </button>
+              <button class="btn btn-outline-danger" (click)="cancelItem()">
+                <i class="fas fa-times"></i> Cancel
+              </button>
+            </div>
+          </ng-template>
+        </p-dialog>
+      </div>
     </div>
+  </div>
 </div>

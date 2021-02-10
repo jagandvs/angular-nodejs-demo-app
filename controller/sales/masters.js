@@ -42,6 +42,7 @@ exports.updateItemMaster = async (req, res) => {
 
 exports.UPSERT_ITEM_UNIT_MASTER = async (req, res) => {
   try {
+    console.warn(req.body);
     const pool = await poolPromise;
     const result = await pool
       .request()
@@ -54,7 +55,7 @@ exports.UPSERT_ITEM_UNIT_MASTER = async (req, res) => {
       .output("ERROR", sql.VarChar)
       .execute("UPSERT_ITEM_UNIT_MASTER");
 
-    res.json(result);
+    res.json(result.recordset);
   } catch (error) {
     res.status(500);
     res.send(error.message);

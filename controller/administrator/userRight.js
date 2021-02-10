@@ -62,17 +62,18 @@ exports.userRight = async (req, res) => {
 exports.insertUserRights = async (req, res) => {
   try {
     const pool = await poolPromise;
+    console.log(req.body);
     for (let data of req.body) {
       const result = await pool
         .request()
-        .input("UR_UM_CODE", sql.VarChar, JSON.stringify(data))
+        .input("UR_UM_CODE", sql.VarChar, data.UR_UM_CODE)
         .input("UR_SM_CODE", sql.Int, data.UR_SM_CODE)
         .input("UR_RIGHTS", sql.VarChar, data.UR_RIGHTS)
         .input("PROCESS", sql.VarChar, data.PROCESS)
         .input("MOD_CODE", sql.Int, data.MOD_CODE)
         .execute("userRight");
-      console.log(result);
     }
+    console.warn(result);
     res.json({ message: "created Successfully" });
   } catch (error) {
     res.json(error);

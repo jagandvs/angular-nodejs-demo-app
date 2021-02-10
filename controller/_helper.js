@@ -1,8 +1,4 @@
 const { sql, poolPromise } = require("../database/db");
-const fs = require("fs");
-const { nextTick } = require("process");
-var rawdata = fs.readFileSync("./controller/queries.json");
-var queries = JSON.parse(rawdata);
 
 exports.TableResponse = async (req, res) => {
   try {
@@ -51,11 +47,9 @@ exports.logger = async (req, res, next) => {
       .input("LG_U_CODE", sql.Int, req.headers.lg_u_code)
       .input("LG_IP_ADDRESS", sql.VarChar, req.ip)
       .execute("insertLog");
-    console.log(result);
     next();
   } catch (error) {
     res.status(500);
     res.send(error.message);
-    console.log(error);
   }
 };

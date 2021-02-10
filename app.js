@@ -10,6 +10,7 @@ const { sql, poolPromise } = require("./database/db");
 const salesRouter = require("./routes/sales");
 const authRouter = require("./routes/auth");
 const administratorRouter = require("./routes/administrator");
+const common = require("./routes/common");
 const app = express();
 
 app.use(cors());
@@ -34,6 +35,7 @@ app.use(morgan("combined", { stream: accessLogStream }));
 app.use("/api/auth", authRouter);
 app.use("/api/sales", salesRouter);
 app.use("/api/administrator", administratorRouter);
+app.use("/api/common", common);
 // app.use("/api/logger", logger);
 // app.use(router);
 app.use(function (err, req, res, next) {

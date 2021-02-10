@@ -262,6 +262,7 @@ export class SalesItemMasterComponent implements OnInit {
       });
     }
   }
+
   exportExcel() {
     import("xlsx").then((xlsx) => {
       const worksheet = xlsx.utils.json_to_sheet(this.itemMasterTableResponse);

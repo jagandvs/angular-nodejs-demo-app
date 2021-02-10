@@ -10,18 +10,23 @@ export const httpOptions = {
   headers: new HttpHeaders({ logger: localStorage.getItem("currentUser") }),
 };
 
-// Administrator routes
+// Administrator --- User Rights routes
 
 export const userMaster = ApiURL + "administrator/userMaster";
 export const getModule = ApiURL + "administrator/getModule";
 export const getScreen = ApiURL + "administrator/getScreen";
 export const userRight = ApiURL + "administrator/userRight";
 export const insertUserRights = ApiURL + "administrator/insertUserRights";
+
+// common routes
+export const setResetModify = ApiURL + "common/setResetModify";
+
 // Login Routes
 export const getCompanyDetails = ApiURL + "auth/getCompanyDetails";
 export const login = ApiURL + "auth/signin";
 
-// Sales Module routes
+// Sales Module --- Master ---- Item Unit Master Routes
+export const UPSERT_ITEM_UNIT_MASTER = ApiURL + "sales/UPSERT_ITEM_UNIT_MASTER";
 
 export const TableResponse = ApiURL + "sales/TableResponse";
 export const insertItemMaster = ApiURL + "sales/insertItemMaster";

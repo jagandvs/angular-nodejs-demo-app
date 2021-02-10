@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { VirtualTimeScheduler } from "rxjs";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../_services/authentication.service";
+import { UM_NAME } from "../_helpers/variables";
 declare var jQuery: any;
 @Component({
   selector: "app-home",
@@ -24,6 +25,6 @@ export class HomeComponent implements OnInit {
       });
     })(jQuery);
 
-    this.user = this.authenticationService.currentUserValue.UM_USERNAME;
+    this.user = UM_NAME;
   }
 }

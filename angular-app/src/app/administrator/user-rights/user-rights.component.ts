@@ -337,7 +337,7 @@ export class UserRightsComponent implements OnInit {
     this.userRightForm.reset();
   }
   save() {
-    if (this.f["forms"].value) {
+    if (this.userRightForm.valid) {
       var insertData = [];
       var _menu, _add, _view, _update, _delete, _print, _back_date;
       for (let data of this.userRightsTable.value) {
@@ -366,35 +366,11 @@ export class UserRightsComponent implements OnInit {
         });
       });
     } else {
-      var insertData = [];
-      this.f["menu"].value ? (_menu = "1") : (_menu = "0");
-      this.f["add"].value ? (_add = "1") : (_add = "0");
-      this.f["view"].value ? (_view = "1") : (_view = "0");
-      this.f["update"].value ? (_update = "1") : (_update = "0");
-      this.f["delete"].value ? (_delete = "1") : (_delete = "0");
-      this.f["print"].value ? (_print = "1") : (_print = "0");
-      this.f["back_date"].value ? (_back_date = "1") : (_back_date = "0");
-
-      insertData.push({
-        UR_UM_CODE: this.UR_UM_CODE,
-        UR_SM_CODE: this.UR_SM_CODE,
-        UR_RIGHTS:
-          _menu + _add + _view + _update + _delete + _print + _back_date,
-        PROCESS: "insert",
-        MOD_CODE: this.MOD_CODE,
+      this.messageService.add({
+        severity: "error",
+        summary: "Error Message",
+        detail: "Please select required field to show and save user rights",
       });
-      this.service.insertUserRights(insertData).subscribe(
-        (data) => {
-          this.messageService.add({
-            severity: "success",
-            summary: "Success Message",
-            detail: "User Rights Saved Successfully",
-          });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
     }
   }
 }

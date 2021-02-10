@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get("/userMaster", isSignedIn, userMaster);
 router.get("/getModule", isSignedIn, getModule);
-router.get("/getScreen", isSignedIn, getScreen);
+router.get("/getScreen", getScreen);
 router.post("/userRight", isSignedIn, logger, userRight);
 router.post("/insertUserRights", isSignedIn, logger, insertUserRights);
 
