@@ -33,13 +33,13 @@ exports.deleteRow = async (req, res) => {
     const pool = await poolPromise;
     const result = await pool
       .request()
-      .input("PK_CODE", sql.Int, req.body.PK_CODE)
-      .input("PK_Field", sql.VarChar, req.body.PK_Field)
-      .input("ES_DELETE", sql.Int, req.body.ES_DELETE)
+      .input("PK_CODE", sql.VarChar, req.body.PK_CODE)
+      .input("PK_Field", sql.VarChar, req.body.PK_FIELD)
+      .input("ES_DELETE", sql.VarChar, req.body.ES_DELETE)
       .input("DELETE", sql.VarChar, req.body.DELETE)
       .input("TABLE_NAME", sql.VarChar, req.body.TABLE_NAME)
       .execute("SP_CM_DELETE");
-    res.json(result.recordses.length);
+    res.json(result);
   } catch (error) {
     res.status(500);
     console.log(error);

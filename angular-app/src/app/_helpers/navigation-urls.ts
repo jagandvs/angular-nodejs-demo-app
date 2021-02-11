@@ -20,6 +20,7 @@ export const insertUserRights = ApiURL + "administrator/insertUserRights";
 
 // common routes
 export const setResetModify = ApiURL + "common/setResetModify";
+export const deleteRow = ApiURL + "common/deleteRow";
 
 // Login Routes
 export const getCompanyDetails = ApiURL + "auth/getCompanyDetails";

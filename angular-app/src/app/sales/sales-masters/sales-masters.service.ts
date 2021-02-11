@@ -88,23 +88,23 @@ export class SalesMastersService {
         )
       );
     } else if (PROCESS == "insert") {
+      let body = {
+        I_UOM_CM_COMP_ID: CM_ID,
+        I_UOM_NAME: I_UOM_NAME,
+        I_UOM_DESC: I_UOM_DESC,
+        PROCESS: PROCESS,
+      };
+      return this.http.post<any>(
+        UPSERT_ITEM_UNIT_MASTER,
+        body,
+        this.commonService.logger(
+          "Item Unit Master",
+          "insert",
+          "Item Unit Master",
+          "",
+          ""
+        )
+      );
     }
-    let body = {
-      I_UOM_CM_COMP_ID: CM_ID,
-      I_UOM_NAME: I_UOM_NAME,
-      I_UOM_DESC: I_UOM_DESC,
-      PROCESS: PROCESS,
-    };
-    return this.http.post<any>(
-      UPSERT_ITEM_UNIT_MASTER,
-      body,
-      this.commonService.logger(
-        "Item Unit Master",
-        "insert",
-        "Item Unit Master",
-        "",
-        ""
-      )
-    );
   }
 }

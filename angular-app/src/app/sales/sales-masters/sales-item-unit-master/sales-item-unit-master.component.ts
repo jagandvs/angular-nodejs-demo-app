@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ConfirmationService, MessageService } from "primeng/api";
+import { UM_CODE } from "src/app/_helpers/variables";
+import { ITEM_UNIT_MASTER } from "src/app/_helpers/SM_CODE";
 import { CommonServicesService } from "src/app/_services/common-services.service";
-import { isNull } from "util";
 import { SalesMastersService } from "../sales-masters.service";
 
 @Component({
@@ -14,10 +15,20 @@ export class SalesItemUnitMasterComponent implements OnInit {
   public itemUnitMasterTableResponse: any[] = [];
   public itemUnitMasterForm: FormGroup;
 
+  public menuAccess: boolean = true;
+  public addAccess: boolean = true;
+  public viewAccess: boolean = true;
+  public updateAccess: boolean = true;
+  public deleteAccess: boolean = true;
+  public printAccess: boolean = true;
+  public backDateAccess: boolean = true;
+
   public loading: boolean = false;
   public submitted: boolean = false;
   public newItem: boolean = false;
   public displayBasic: boolean = false;
+
+  public editingItemCode: number;
 
   public process: string = "";
   constructor(
@@ -29,7 +40,22 @@ export class SalesItemUnitMasterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getItemUnitMasterTableResponse();
+    this.commonService
+      .checkRight(UM_CODE, ITEM_UNIT_MASTER, "checkRight")
+      .subscribe((data) => {
+        for (let access of data) {
+          this.menuAccess = access.MENU;
+          this.addAccess = access.ADD;
+          this.deleteAccess = access.DELETE;
+          this.viewAccess = access.VIEW;
+          this.printAccess = access.PRINT;
+          this.backDateAccess = access.BACK_DATE;
+          this.updateAccess = access.UPDATE;
+        }
+        if (this.menuAccess) {
+          this.getItemUnitMasterTableResponse();
+        }
+      });
 
     this.itemUnitMasterForm = this.fb.group({
       I_UOM_NAME: ["", Validators.required],
@@ -52,51 +78,68 @@ export class SalesItemUnitMasterComponent implements OnInit {
   }
 
   addNewItem() {
-    this.displayBasic = true;
-    this.submitted = false;
-    this.newItem = true;
+    if (this.addAccess) {
+      this.displayBasic = true;
+      this.submitted = false;
+      this.newItem = true;
+    } else {
+      this.messageService.add({
+        key: "t1",
+        severity: "warn",
+        summary: "Warning",
+        detail: "Sorry!! You dont have access to add Item",
+      });
+    }
   }
 
   editItem(editableItem: any) {
-    console.log(editableItem);
-    this.f["I_UOM_NAME"].setValue(editableItem.I_UOM_NAME);
-    this.f["I_UOM_DESC"].setValue(editableItem.I_UOM_DESC);
-    this.f["I_UOM_CODE"].setValue(editableItem.I_UOM_CODE);
-    this.commonService
-      .setResetModify(
-        "ITEM_UNIT_MASTER",
-        "MODIFY",
-        "I_UOM_CODE",
-        editableItem.I_UOM_CODE,
-        0,
-        "check"
-      )
-      .subscribe((data) => {
-        console.log(data);
-        if (data == 0) {
-          this.commonService
-            .setResetModify(
-              "ITEM_UNIT_MASTER",
-              "MODIFY",
-              "I_UOM_CODE",
-              editableItem.I_UOM_CODE,
-              1,
-              "setLock"
-            )
-            .subscribe((data) => {
-              this.newItem = false;
-              this.displayBasic = true;
-              this.submitted = false;
+    if (this.updateAccess) {
+      this.editingItemCode = editableItem.I_UOM_CODE;
+      this.f["I_UOM_NAME"].setValue(editableItem.I_UOM_NAME);
+      this.f["I_UOM_DESC"].setValue(editableItem.I_UOM_DESC);
+      this.f["I_UOM_CODE"].setValue(editableItem.I_UOM_CODE);
+      this.commonService
+        .setResetModify(
+          "ITEM_UNIT_MASTER",
+          "MODIFY",
+          "I_UOM_CODE",
+          editableItem.I_UOM_CODE,
+          0,
+          "check"
+        )
+        .subscribe((data) => {
+          if (data == 0) {
+            this.commonService
+              .setResetModify(
+                "ITEM_UNIT_MASTER",
+                "MODIFY",
+                "I_UOM_CODE",
+                editableItem.I_UOM_CODE,
+                1,
+                "setLock"
+              )
+              .subscribe((data) => {
+                this.newItem = false;
+                this.displayBasic = true;
+                this.submitted = false;
+              });
+          } else {
+            this.messageService.add({
+              key: "t1",
+              severity: "info",
+              summary: "Success",
+              detail: "Someone Editing the Item/ Item is locked",
             });
-        } else {
-          this.messageService.add({
-            key: "t1",
-            severity: "info",
-            summary: "Success",
-            detail: "Some one already Successfully",
-          });
-        }
+          }
+        });
+    } else {
+      this.messageService.add({
+        key: "t1",
+        severity: "warn",
+        summary: "Warning",
+        detail: "Sorry!! You dont have access to Edit Item",
       });
+    }
   }
 
   cancelItem() {
@@ -105,7 +148,7 @@ export class SalesItemUnitMasterComponent implements OnInit {
         "ITEM_UNIT_MASTER",
         "MODIFY",
         "I_UOM_CODE",
-        this.f["I_UOM_CODE"].value,
+        this.editingItemCode,
         0,
         "setLock"
       )
@@ -161,5 +204,32 @@ export class SalesItemUnitMasterComponent implements OnInit {
       });
     }
   }
-  cancel() {}
+
+  deleteItem(deleteItem: string) {
+    if (this.deleteAccess) {
+      this.commonService
+        .deleteRow(
+          deleteItem,
+          "I_UOM_CODE",
+          "1",
+          "ES_DELETE",
+          "ITEM_UNIT_MASTER"
+        )
+        .subscribe(
+          (data) => {
+            console.log(data);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } else {
+      this.messageService.add({
+        key: "t1",
+        severity: "warn",
+        summary: "Warning",
+        detail: "Sorry!! You dont have access to Delete Item",
+      });
+    }
+  }
 }

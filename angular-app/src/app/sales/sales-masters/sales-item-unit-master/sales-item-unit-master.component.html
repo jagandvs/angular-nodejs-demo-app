@@ -26,7 +26,7 @@
           <!-- breadcrumb section ends -->
         </div>
         <!-- header section ends -->
-        <div class="content-body">
+        <div class="content-body" *ngIf="menuAccess">
           <p-card>
             <p-toast position="bottom-center" key="t1"></p-toast>
             <p-confirmDialog
@@ -106,7 +106,7 @@
                   <td>
                     <button
                       class="btn btn-outline-danger mr-1 round"
-                      (click)="deleteTableRow(itemUnitMasterTableResponse.I_UOM_CODE,ri)"
+                      (click)="deleteItem(itemUnitMasterTableResponse.I_UOM_CODE)"
                     >
                       <i class="fas fa-trash"></i>
                     </button>
@@ -129,6 +129,16 @@
               </ng-template>
             </p-table>
           </p-card>
+        </div>
+        <div class="content-body" *ngIf="!menuAccess">
+          <div class="card card-body shadow">
+            <div class="container align-item-center">
+              <h1 class="text-center" style="padding: 80px 20px;">
+                OOPS!!! You don't have access to this Page...
+              </h1>
+              <p class="text-center">Please Contact Administrator</p>
+            </div>
+          </div>
         </div>
         <p-dialog
           [contentStyle]="{'overflow':'visible'}"
@@ -197,7 +207,7 @@
               </button>
               <button
                 class="btn btn-outline-secondary"
-                (click)="resetItemForm();"
+                (click)="itemUnitMasterForm.reset()"
               >
                 <i class="fas fa-undo"></i> Reset
               </button>
