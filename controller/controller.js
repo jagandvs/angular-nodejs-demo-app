@@ -229,33 +229,3 @@ exports.updateItemMaster = async (req, res) => {
     res.send(error.message);
   }
 };
-// async deleteBomDetail(req, res) {
-//     try {
-//         const pool = await poolPromise
-//         const result = await pool.request()
-//             .input('BD_BM_CODE', sql.Int, req.query.bd_bm_code)
-//             .query(queries.deleteBomMaster)
-//         res.json()
-//     } catch (error) {
-//         res.status(500)
-//         res.send(error.message)
-//     }
-// }
-
-// async getData(req, res) {
-//     try {
-//         if (req.query.code != null) {
-//             const pool = await poolPromise
-
-//             const result = await pool.request()
-//                 .input('code', sql.BigInt, req.query.code)
-//                 .query(queries.getData)
-//             res.json(result.recordset)
-//         } else {
-//             res.send('Please fill all the details!')
-//         }
-//     } catch (error) {
-//         res.status(500)
-//         res.send(error.message)
-//     }
-// }
