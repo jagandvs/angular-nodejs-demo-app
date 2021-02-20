@@ -28,7 +28,6 @@ exports.setResetModify = async (req, res) => {
 };
 
 exports.deleteRow = async (req, res) => {
-  console.log(req.body);
   try {
     const pool = await poolPromise;
     const result = await pool
@@ -40,6 +39,23 @@ exports.deleteRow = async (req, res) => {
       .input("TABLE_NAME", sql.VarChar, req.body.TABLE_NAME)
       .execute("SP_CM_DELETE");
     res.json(result);
+  } catch (error) {
+    res.status(500);
+    console.log(error);
+    res.json({ message: error.message });
+  }
+};
+
+exports.SP_CM_FillCombo = async (req, res) => {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .input("TableNames", sql.VarChar, req.body.TableNames)
+      .input("fieldNames", sql.VarChar, req.body.fieldNames)
+      .input("condition", sql.VarChar, req.body.condition)
+      .execute("SP_CM_FillCombo");
+    res.json(result.recordset);
   } catch (error) {
     res.status(500);
     console.log(error);

@@ -8,6 +8,7 @@ import {
   httpLogin,
   httpOptions,
   setResetModify,
+  SP_CM_FillCombo,
   TableResponse,
   userRight,
 } from "../_helpers/navigation-urls";
@@ -56,22 +57,23 @@ export class CommonServicesService {
     LG_DOC_NAME: string,
     LG_DOC_CODE: any
   ) {
+    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
     const httpOptions = {
       headers: new HttpHeaders({
-        LG_CM_CODE: CM_CODE,
-        LG_CM_COMP_ID: CM_ID,
+        LG_CM_CODE: currentUser.companyDetails.CM_CODE,
+        LG_CM_COMP_ID: currentUser.companyDetails.CM_ID,
         LG_DATE: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
         LG_SOURCE: LG_SOURCE,
         LG_EVENT: LG_EVENT,
-        LG_COMP_NAME: CM_NAME,
+        LG_COMP_NAME: currentUser.companyDetails.CM_NAME,
         LG_DOC_NO: LG_DOC_NO,
         LG_DOC_NAME: LG_DOC_NAME,
         LG_DOC_CODE: LG_DOC_CODE,
-        LG_U_NAME: UM_NAME,
-        LG_U_CODE: UM_CODE,
+        LG_U_NAME: currentUser.user.UM_NAME,
+        LG_U_CODE: currentUser.user.UM_CODE,
       }),
     };
-    console.log(httpOptions);
     return httpOptions;
   }
 
@@ -136,7 +138,6 @@ export class CommonServicesService {
       .pipe(
         map((userRightsData) => {
           var access = userRightsData[0].UR_RIGHTS.split("");
-          console.log(userRightsData);
           return [
             {
               SM_NAME: userRightsData[0].SM_NAME,
@@ -152,5 +153,9 @@ export class CommonServicesService {
           ];
         })
       );
+  }
+
+  FillCombo(DropDownQuery: any): Observable<any[]> {
+    return this.http.post<any[]>(SP_CM_FillCombo, DropDownQuery, httpOptions);
   }
 }

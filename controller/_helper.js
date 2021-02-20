@@ -28,7 +28,6 @@ exports.logger = async (req, res, next) => {
   // console.log(logDetails.user.UM_NAME);
   // console.log(new Date().toISOString());
   // next();
-  console.log(req.headers.lg_cm_code);
 
   try {
     const pool = await poolPromise;

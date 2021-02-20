@@ -40,6 +40,7 @@ export class SalesItemUnitMasterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loading = true;
     this.commonService
       .checkRight(UM_CODE, ITEM_UNIT_MASTER, "checkRight")
       .subscribe((data) => {
@@ -54,6 +55,8 @@ export class SalesItemUnitMasterComponent implements OnInit {
         }
         if (this.menuAccess) {
           this.getItemUnitMasterTableResponse();
+        } else {
+          this.loading = false;
         }
       });
 
@@ -69,7 +72,6 @@ export class SalesItemUnitMasterComponent implements OnInit {
   }
 
   getItemUnitMasterTableResponse() {
-    this.loading = true;
     this.itemUnitMasterTableResponse = [];
     this.service.getItemUnitMasterTableResponse().subscribe((data) => {
       this.itemUnitMasterTableResponse = data;
@@ -181,6 +183,7 @@ export class SalesItemUnitMasterComponent implements OnInit {
               (data) => {
                 this.displayBasic = false;
                 this.submitted = false;
+
                 this.getItemUnitMasterTableResponse();
                 this.messageService.add({
                   key: "t1",
@@ -207,22 +210,36 @@ export class SalesItemUnitMasterComponent implements OnInit {
 
   deleteItem(deleteItem: string) {
     if (this.deleteAccess) {
-      this.commonService
-        .deleteRow(
-          deleteItem,
-          "I_UOM_CODE",
-          "1",
-          "ES_DELETE",
-          "ITEM_UNIT_MASTER"
-        )
-        .subscribe(
-          (data) => {
-            console.log(data);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+      this.confirmationService.confirm({
+        message: "Are you sure that you want to delete?",
+        header: "Delete Confirmation",
+        icon: "fas fa-trash",
+        key: "c1",
+        accept: () => {
+          this.commonService
+            .deleteRow(
+              deleteItem,
+              "I_UOM_CODE",
+              "1",
+              "ES_DELETE",
+              "ITEM_UNIT_MASTER"
+            )
+            .subscribe(
+              (data) => {
+                this.getItemUnitMasterTableResponse();
+                this.messageService.add({
+                  key: "t1",
+                  severity: "success",
+                  summary: "Success",
+                  detail: "Deleted Successfully",
+                });
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
+        },
+      });
     } else {
       this.messageService.add({
         key: "t1",

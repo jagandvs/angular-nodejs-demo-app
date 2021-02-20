@@ -39,11 +39,9 @@ export class UserRightsComponent implements OnInit {
 
   ngOnInit() {
     this.service.userMaster().subscribe((users) => {
-      console.log(users);
       this.users = users;
     });
     this.service.getModule().subscribe((modules) => {
-      console.log(modules);
       this.moduleNames = modules;
     });
 
@@ -75,7 +73,6 @@ export class UserRightsComponent implements OnInit {
   }
 
   checkUsername(user: string, fieldName: string) {
-    console.log(user);
     var index = this.users.findIndex(
       (userItem) => userItem.UM_USERNAME === user
     );
@@ -91,7 +88,6 @@ export class UserRightsComponent implements OnInit {
     }
   }
   toggleForUsername() {
-    console.log(this.f["copyRights"].value);
     if (this.f["copyRights"].value) {
       this.f["fromUserName"].enable();
       this.f["fromUserName"].setValidators([Validators.required]);
@@ -124,7 +120,6 @@ export class UserRightsComponent implements OnInit {
         this.service
           .getScreen(this.moduleNames[index].MODULE_NO)
           .subscribe((data) => {
-            console.log(data);
             this.screens = data;
           });
         this.MOD_CODE = this.moduleNames[index].MODULE_NO;
@@ -279,7 +274,6 @@ export class UserRightsComponent implements OnInit {
 
     let updateMenu = !getMenu.value.MENU;
     getMenu.patchValue({ MENU: updateMenu });
-    console.log(getMenu.value);
   }
   changeAddAccess(i: number) {
     const getAdd = (<FormArray>this.userRightForm.get("userRightsTable")).at(i);
@@ -294,7 +288,6 @@ export class UserRightsComponent implements OnInit {
 
     let updateView = !getView.value.VIEW;
     getView.patchValue({ VIEW: updateView });
-    console.log(getView.value);
   }
   changeUpdateAccess(i: number) {
     const getUpdate = (<FormArray>this.userRightForm.get("userRightsTable")).at(
@@ -303,7 +296,6 @@ export class UserRightsComponent implements OnInit {
 
     let update = !getUpdate.value.UPDATE;
     getUpdate.patchValue({ UPDATE: update });
-    console.log(getUpdate.value);
   }
   changeDeleteAccess(i: number) {
     const getDelete = (<FormArray>this.userRightForm.get("userRightsTable")).at(
@@ -312,7 +304,6 @@ export class UserRightsComponent implements OnInit {
 
     let updateDelete = !getDelete.value.DELETE;
     getDelete.patchValue({ DELETE: updateDelete });
-    console.log(getDelete.value);
   }
   changePrintAccess(i: number) {
     const getPrint = (<FormArray>this.userRightForm.get("userRightsTable")).at(
@@ -320,7 +311,6 @@ export class UserRightsComponent implements OnInit {
     );
     let updatePrint = !getPrint.value.PRINT;
     getPrint.patchValue({ PRINT: updatePrint });
-    console.log(getPrint.value);
   }
   changeBackDateAccess(i: number) {
     const getBackDate = (<FormArray>(

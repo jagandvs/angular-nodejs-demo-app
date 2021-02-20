@@ -20,6 +20,7 @@ import { AdministratorComponent } from "./administrator/administrator.component"
 import { JwtInterceptor } from "./_helpers/JwtInterceptor";
 import { ErrorInterceptor } from "./_helpers/error.interceptor";
 import { BnNgIdleService } from "bn-ng-idle";
+import { GetNameForCodesPipe } from './pipes/get-name-for-codes.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { BnNgIdleService } from "bn-ng-idle";
     GstComponent,
     MastersComponent,
     AdministratorComponent,
+    GetNameForCodesPipe,
   ],
   imports: [
     BrowserModule,

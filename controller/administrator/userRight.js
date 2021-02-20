@@ -28,7 +28,6 @@ exports.getModule = async (req, res) => {
 };
 
 exports.getScreen = async (req, res) => {
-  console.log(req.query.moduleNo);
   try {
     const pool = await poolPromise;
     const result = await pool
@@ -42,7 +41,6 @@ exports.getScreen = async (req, res) => {
 };
 
 exports.userRight = async (req, res) => {
-  console.log(req.body);
   try {
     const pool = await poolPromise;
     const result = await pool
@@ -62,7 +60,6 @@ exports.userRight = async (req, res) => {
 exports.insertUserRights = async (req, res) => {
   try {
     const pool = await poolPromise;
-    console.log(req.body);
     for (let data of req.body) {
       const result = await pool
         .request()

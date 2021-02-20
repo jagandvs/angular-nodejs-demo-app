@@ -6,7 +6,6 @@ var queries = JSON.parse(rawdata);
 
 exports.getInvoiceDetails = async (req, res) => {
   try {
-    console.log(req.query.bm_code);
     const pool = await poolPromise;
     const result = await pool
       .request()

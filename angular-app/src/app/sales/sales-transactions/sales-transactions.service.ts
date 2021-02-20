@@ -1,64 +1,99 @@
-import { Injectable } from '@angular/core';
-import { BomTableResponse } from '../../model/BomTableResponse';
-import { ItemTableResponse } from '../../model/ItemTableResponse';
-import { SalesOrderTableResponse } from '../../model/SalesOrderTableResponse';
-import { environment } from '../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { deleteTable, getInvoiceDetails, httpOptions, postBomDetail, postBomMaster, TableResponse, updateBomMaster } from '../../_helpers/navigation-urls'
-import { Observable } from 'rxjs';
-import { BOM_MASTER } from 'src/app/model/BOM_MASTER';
-import { BOM_DETAIL } from 'src/app/model/BOM_DETAIL';
-import { SalesOrderTypeMaster } from 'src/app/model/SalesOrderTypeMaster';
-import { PartyMaster } from 'src/app/model/PartyMaster';
+import { Injectable } from "@angular/core";
+import { map } from "rxjs/operators";
 
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import {
+  httpOptions,
+  INSERT_UPSERT_CUSTOMER_PO,
+  INSERT_UPSERT_CUSTOMER_PO_DETAIL,
+  Item_SelectedIndexChanged,
+  UPSERT_CUSTOMER_PO,
+} from "../../_helpers/navigation-urls";
+import { Observable } from "rxjs";
+
+import { CM_ID } from "src/app/_helpers/variables";
+import { SalesOrderTableResponse } from "./model/salesOrderTableResponse";
+import { CommonServicesService } from "src/app/_services/common-services.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class SalesTransactionsService {
   constructor(
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private commonService: CommonServicesService
+  ) {}
 
-
-  getPartyMasterTableResponse(): Observable<PartyMaster[]> {
-    let body = { fieldNames: 'P_CODE,P_NAME', tableNames: 'PARTY_MASTER', condition: 'ES_DELETE=0' }
-    return this.http.post<PartyMaster[]>(TableResponse, body, httpOptions)
+  getSalesOrderTableResponse(): Observable<any[]> {
+    return this.http
+      .post<any[]>(
+        UPSERT_CUSTOMER_PO,
+        {
+          PROCESS: "selectAll",
+          CPOM_CM_COMP_ID: CM_ID,
+        },
+        this.commonService.logger(
+          "Sales Order Table",
+          "select All",
+          "Sales Order",
+          "",
+          ""
+        )
+      )
+      .pipe(
+        map((response) => {
+          const setArray = new Set();
+          const filteredArr = response.filter((el) => {
+            const duplicate = setArray.has(el.CPOM_CODE);
+            setArray.add(el.CPOM_CODE);
+            return !duplicate;
+          });
+          return filteredArr;
+        })
+      );
   }
-
-  getSalesOrderTypeTableResponse(): Observable<SalesOrderTypeMaster[]> {
-    let body = { fieldNames: 'SO_T_CODE,SO_T_DESC', tableNames: 'SO_TYPE_MASTER', condition: 'ES_DELETE=0' }
-    return this.http.post<SalesOrderTypeMaster[]>(TableResponse, body, httpOptions)
+  getSalesOrderMasterAndDetail(CPOM_CODE, PROCESS) {
+    return this.http.post<any[]>(
+      UPSERT_CUSTOMER_PO,
+      {
+        PROCESS: PROCESS,
+        CPOM_CODE: CPOM_CODE,
+        CPOM_CM_COMP_ID: CM_ID,
+      },
+      this.commonService.logger(
+        "Sales Order Master",
+        "select Master and Detail",
+        "Sales Order",
+        "",
+        ""
+      )
+    );
   }
-
-  getSalesOrderTableResponse(): Observable<SalesOrderTableResponse[]> {
-    let body = { fieldNames: 'CPOM_CODE,CPOM_NO,CPOM_PONO,P_NAME,CPOM_DATE', tableNames: 'CUSTPO_MASTER,PARTY_MASTER', condition: 'CPOM_P_CODE=P_CODE and CUSTPO_MASTER.ES_DELETE=0 and PARTY_MASTER.ES_DELETE=0' }
-    return this.http.post<SalesOrderTableResponse[]>(TableResponse, body, httpOptions)
+  Item_SelectedIndexChanged(I_CODE): Observable<any> {
+    return this.http.get<any>(
+      Item_SelectedIndexChanged + "?I_CODE=" + I_CODE,
+      this.commonService.logger(
+        "Sales Order Table",
+        "index changer",
+        "Sales Order",
+        "",
+        ""
+      )
+    );
   }
-
-
-  deleteTable(tableName: string, condition: string): Observable<any> {
-    let body = { tableName: tableName, condition: condition }
-    return this.http.put(deleteTable, body, httpOptions)
+  INSERT_UPSERT_CUSTOMER_PO(masterForm, detailForm, process) {
+    let body = [masterForm, detailForm, { PROCESS: process }];
+    console.log(body);
+    return this.http.post<any>(
+      INSERT_UPSERT_CUSTOMER_PO,
+      body,
+      this.commonService.logger(
+        "Sales Order Table",
+        process,
+        "Sales Order",
+        "",
+        ""
+      )
+    );
   }
-  saveBomMaster(bom_master: BOM_MASTER): Observable<any> {
-
-    return this.http.post<BOM_MASTER>(postBomMaster, JSON.stringify(bom_master), httpOptions);
-  }
-  saveBomDetail(bom_detail: BOM_DETAIL[]): Observable<any> {
-    return this.http.post<BOM_DETAIL[]>(postBomDetail, JSON.stringify(bom_detail), httpOptions);
-  }
-  getBomDetailTable(bd_bm_code: number): Observable<BOM_DETAIL[]> {
-    let body = { fieldNames: '*', tableNames: 'BOM_DETAIL', condition: 'BD_BM_CODE=' + bd_bm_code + 'AND ES_DELETE=0' }
-    return this.http.post<BOM_DETAIL[]>(TableResponse, body, httpOptions)
-  }
-  updateBomMaster(bom_master: BOM_MASTER, BM_CODE: number): Observable<any> {
-
-    return this.http.put<any>(updateBomMaster + '?bm_code=' + BM_CODE, JSON.stringify(bom_master), httpOptions)
-  }
-  getInvoiceDetails(bm_code: number): Observable<any> {
-    return this.http.get<any>(getInvoiceDetails + '?bm_code=' + bm_code)
-
-  }
-
 }

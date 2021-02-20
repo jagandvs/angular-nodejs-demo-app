@@ -19,7 +19,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
 
@@ -57,7 +57,7 @@ const manoj = async (req, res) => {
       manoj_data.rows.add("CODE", data.CODE);
       manoj_data.rows.add("NAME", data.NAME);
     }
-
+    console.log(manoj_data);
     const pool = await poolPromise;
 
     const result = await pool

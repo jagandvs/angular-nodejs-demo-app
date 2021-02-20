@@ -70,9 +70,9 @@ export class AdministratorService {
               SM_NAME: userRight.SM_NAME,
               UR_SM_CODE: userRight.UR_SM_CODE,
               MENU: access[0] == 1,
-              VIEW: access[1] == 1,
-              UPDATE: access[2] == 1,
-              ADD: access[3] == 1,
+              ADD: access[1] == 1,
+              VIEW: access[2] == 1,
+              UPDATE: access[3] == 1,
               DELETE: access[4] == 1,
               PRINT: access[5] == 1,
               BACK_DATE: access[6] == 1,
@@ -111,7 +111,6 @@ export class AdministratorService {
       .pipe(
         map((userRightsData) => {
           var access = userRightsData[0].UR_RIGHTS.split("");
-          console.log(userRightsData);
           return [
             {
               SM_NAME: userRightsData[0].SM_NAME,

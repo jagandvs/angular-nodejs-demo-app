@@ -12,6 +12,20 @@ const config = {
   },
 };
 
+// SECRET=secret
+// USER=DB_A2EA4B_newerpdb_admin
+// PASSWORD=abcd@1234
+// SERVER=SQL5101.site4now.net
+// DBPORT=1433
+// DATABASE=DB_A2EA4B_newerpdb
+
+// SECRET=secret
+// USER=DB_A2EA4B_erpdevlopment_admin
+// PASSWORD=abcd@1234
+// SERVER=SQL5102.site4now.net
+// DBPORT=1433
+// DATABASE=DB_A2EA4B_erpdevlopment
+
 const poolPromise = new sql.ConnectionPool(config)
   .connect()
   .then((pool) => {

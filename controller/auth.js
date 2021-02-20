@@ -10,7 +10,6 @@ exports.signin = async (req, res) => {
       .request()
       .input("UM_USERNAME", sql.VarChar, req.body.username)
       .execute("getUserDetails");
-    console.log(result.recordset[0]);
     if (result.recordset[0] == undefined) {
       return res.status(401).json({
         error: "User not found",
@@ -26,7 +25,7 @@ exports.signin = async (req, res) => {
       .input("fieldNames", sql.VarChar, "*")
       .input("condition", sql.VarChar, `CM_CODE=${req.body.cm_code}`)
       .execute("SP_CM_TableResponse");
-    console.log(matcher_True);
+
     if (matcher_True) {
       const token = jwt.sign(
         { id: result.recordset[0].UM_CODE },

@@ -248,7 +248,6 @@ export class SalesItemMasterComponent implements OnInit {
                 )
                 .subscribe((data) => {
                   this.itemMasterTableResponse = data;
-                  console.log(this.itemMasterTableResponse);
                 });
               this.displayBasic = false;
               this.messageService.add({

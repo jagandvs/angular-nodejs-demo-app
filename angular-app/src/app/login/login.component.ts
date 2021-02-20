@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit {
             new Date(detail.CM_OPENING_DATE).getTime() < todayDate.getTime() &&
             new Date(detail.CM_CLOSING_DATE).getTime() > todayDate.getTime()
           ) {
-            console.log(detail.CM_CODE);
             this.f.financialYear.setValue(detail.CM_CODE);
           }
         });
@@ -98,7 +97,6 @@ export class LoginComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          console.log(error);
           this.errorMessage = error.error.error;
           this.loading = false;
         }
