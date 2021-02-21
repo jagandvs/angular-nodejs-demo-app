@@ -177,11 +177,20 @@ export class SalesSalesOrderComponent implements OnInit {
   }
 
   addNewSalesOrder() {
-    this.displayBasic = true;
-    this.salesOrderDetailTable = [];
-    this.salesOrderDetails = [];
-    this.newOrder = true;
-    this.f["CPOM_WORK_ODR_NO"].disable();
+    if (this.addAccess) {
+      this.displayBasic = true;
+      this.salesOrderDetailTable = [];
+      this.salesOrderDetails = [];
+      this.newOrder = true;
+      this.f["CPOM_WORK_ODR_NO"].disable();
+    } else {
+      this.messageService.add({
+        key: "t1",
+        severity: "warn",
+        summary: "Warning",
+        detail: "Sorry!! You dont have access to Add Sales Order",
+      });
+    }
   }
 
   editSalesOrder(salesOrderTableResponse) {
@@ -289,6 +298,13 @@ export class SalesSalesOrderComponent implements OnInit {
             });
           }
         });
+    } else {
+      this.messageService.add({
+        key: "t1",
+        severity: "warn",
+        summary: "Warning",
+        detail: "Sorry!! You dont have access to Edit Sales Order",
+      });
     }
   }
 

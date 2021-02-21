@@ -25,7 +25,7 @@
     </div>
     <!-- header section ends -->
 
-    <div class="content-body">
+    <div class="content-body" *ngIf="menuAccess">
       <p-card>
         <p-toast position="bottom-center" key="t1"></p-toast>
         <p-confirmDialog
